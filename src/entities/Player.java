@@ -2,6 +2,7 @@ package entities;
 
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
+import static utils.HelpMethods.CanMoveHere;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+
+import utils.LoadSave;
 
 public class Player extends Character{
 	private BufferedImage[][] animations;
@@ -20,115 +23,118 @@ public class Player extends Character{
 	private boolean attacking = false;
 	private boolean left, right, up, down;
 	private float playerSpeed = 2.7f;
-	
-	public Player(float x, float y) {
-		super(x, y);
+	private int[][] bgData;
+
+	public Player(float x, float y, int width, int height) {
+		super(x, y, width, height);
 		loadAnimations();
 	}
-	
+
 	public void update() {
+		updatePosition();
 		updateAnimationTick();
 		setAnimation();
-		updatePosition();
+		updateHitbox();
+
 	}
-	
+
 	public void render(Graphics g) {
 		g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, null);
+		drawHitbox(g);
 	}
-	
+
 	private void updateAnimationTick() {
 		animationTick++;
-		
+
 		if(animationTick >= animationSpeed) {
 			animationTick = 0;
 			animationIndex++;
-			
+
 			if(animationIndex >= getSpriteAmount(playerAction)) {
 				animationIndex = 0;
 				attacking = false;
 			}
 		}
-		
+
 	}
-	
+
 	private void setAnimation() {
 		int startAnimation = playerAction;
-		
+
 		if(moving) {
 			playerAction = RUNNING;
 		}
 		else {
 			playerAction = IDLE;
 		}
-		
+
 		if(attacking) {
 			playerAction = ATTACK;
 		}
-		
+
 		if(startAnimation != playerAction) {
 			resetAnimationTick();
 		}
-		
+
 	}
-	
+
 	private void resetAnimationTick() {
 		animationTick = 0;
 		animationIndex = 0;
-		
+
 	}
 
 	private void updatePosition() {
 		moving = false;
-		
+		if(!left && !right && !up && !down){
+			return;
+		}
+
+		float xSpeed = 0, ySpeed = 0;
+
+
 		if(left && !right) {
-			x -= playerSpeed;
-			moving = true;
+			xSpeed = -playerSpeed;
 		} else if(right && !left) {
-			x += playerSpeed;
-			moving = true;
+			xSpeed = playerSpeed;
 		}
-		
+
 		if(up && !down) {
-			y -= playerSpeed;
-			moving = true;
+			ySpeed = -playerSpeed;
 		} else if(down && !up) {
-			y += playerSpeed;
-			moving = true;
+			ySpeed = playerSpeed;
+		}
+
+		if(CanMoveHere(x+xSpeed, y + ySpeed, width, height, bgData)){
+			this.x += xSpeed;
+			this.y += ySpeed;
 		}
 	}
-	
+
 	private void loadAnimations() {
-		InputStream is = getClass().getResourceAsStream("/Enchantress.png");
-		
-		try {
-			BufferedImage img = ImageIO.read(is);
-			
-			animations = new BufferedImage[4][8];
-			
-			for(int j=0; j < animations.length; j++) {
-				for(int i=0; i < animations[j].length; i++) {
-					animations[j][i] = img.getSubimage(i*75, j*75, 75, 75);
-				}
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch(IOException e) {
-				e.printStackTrace();
+
+		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+
+		animations = new BufferedImage[4][8];
+
+		for(int j=0; j < animations.length; j++) {
+			for(int i=0; i < animations[j].length; i++) {
+				animations[j][i] = img.getSubimage(i*75, j*75, 75, 75);
 			}
 		}
 	}
-	
+
+	public void loadbgData(int[][] bdData){
+		this.bgData = bgData;
+	}
+
 	public void resetDirectionBooleans() {
 		left = false;
 		right = false;
 		up = false;
 		down = false;
 	}
-	
+
 	public void setAttack(boolean attacking) {
 		this.attacking = attacking;
 	}
@@ -164,6 +170,6 @@ public class Player extends Character{
 	public void setDown(boolean down) {
 		this.down = down;
 	}
-	
-	
+
+
 }
