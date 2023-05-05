@@ -50,11 +50,13 @@ public class Player extends Character{
 	}
 
 	public void render(Graphics g) {
+//		drawHitbox(g);
+		
 		if(left) {
-			g.drawImage(animations[playerAction][animationIndex], (int) x + 75, (int) y, -75, 75, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75, (int) (hitbox.y - yDrawOffset), -width, height, null);
 		}
 		else {
-			g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
 		}
 	}
 
