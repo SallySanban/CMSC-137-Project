@@ -33,7 +33,12 @@ public class Player extends Character{
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, null);
+		if(left) {
+			g.drawImage(animations[playerAction][animationIndex], (int) x + 75, (int) y, -75, 75, null);
+		}
+		else {
+			g.drawImage(animations[playerAction][animationIndex], (int) x, (int) y, null);
+		}
 	}
 	
 	private void updateAnimationTick() {
