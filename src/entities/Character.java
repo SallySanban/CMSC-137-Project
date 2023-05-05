@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 
 public abstract class Character {
 	protected float x, y;
-	protected int height, width;
+	protected int width, height;
 	protected Rectangle hitbox;
 
 	public Character(float x, float y, int width, int height) {
@@ -18,17 +18,19 @@ public abstract class Character {
 	}
 
 	protected void drawHitbox(Graphics g){
+		//to visualize hitbox
 		g.setColor(Color.RED);
 		g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
 	}
 
 	private void initHitbox(){
-		hitbox = new Rectangle((int)x, (int)y, width, height);
+		hitbox = new Rectangle((int) x, (int) y, width, height);
+
 	}
 
-	public void updateHitbox(){
-		hitbox.x = (int)x;
-		hitbox.y = (int)y;
+	protected void updateHitbox(){
+		hitbox.x = (int) x;
+		hitbox.y = (int) y;
 	}
 
 	public Rectangle getHitbox(){

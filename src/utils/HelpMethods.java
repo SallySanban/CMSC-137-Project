@@ -10,22 +10,23 @@ public class HelpMethods {
 				if(!IsSolid(x+width, y, bgData))
 					if(!IsSolid(x, y+height, bgData))
 						return true;
-
 		return false;
 	}
 
-	private static boolean IsSolid(float x, float y, int[][] bgData){
+	public static boolean IsSolid(float x, float y, int[][] bgData){
+		float xIndex = x / Game.TILES_SIZE;
+		float yIndex = y / Game.TILES_SIZE;
+
 		if(x < 0 || x >= Game.GAME_WIDTH)
 			return true;
 		if(y < 0 || y >= Game.GAME_HEIGHT)
 			return true;
 
-		float xIndex = x / Game.TILES_SIZE;
-		float yIndex = y / Game.TILES_SIZE;
-
-		int value = bgData[(int)xIndex][(int)yIndex];
+		int value = bgData[(int) yIndex][(int) xIndex];
 
 		if(value >= 60 || value < 0 || value != 58)
+			return true;
+		if(x < 0 || x >= Game.GAME_WIDTH)
 			return true;
 		return false;
 	}

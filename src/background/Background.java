@@ -11,7 +11,8 @@ public class Background {
 		return bgData[y][x];
 	}
 
-	public int[][] getBackgrounData(){
+	public int[][] getBgData(){
 		return bgData;
 	}
+
 }

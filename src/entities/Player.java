@@ -3,7 +3,6 @@ package entities;
 import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
 import static utils.HelpMethods.CanMoveHere;
-
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -31,11 +30,10 @@ public class Player extends Character{
 	}
 
 	public void update() {
-		updatePosition();
 		updateAnimationTick();
 		setAnimation();
+		updatePosition();
 		updateHitbox();
-
 	}
 
 	public void render(Graphics g) {
@@ -86,45 +84,45 @@ public class Player extends Character{
 
 	private void updatePosition() {
 		moving = false;
-		if(!left && !right && !up && !down){
+		if(!left && !right && !up && !down)
 			return;
-		}
 
 		float xSpeed = 0, ySpeed = 0;
 
-
-		if(left && !right) {
+		if(left && !right)
 			xSpeed = -playerSpeed;
-		} else if(right && !left) {
+		else if(right && !left)
 			xSpeed = playerSpeed;
-		}
 
-		if(up && !down) {
+		if(up && !down)
 			ySpeed = -playerSpeed;
-		} else if(down && !up) {
+		else if(down && !up)
 			ySpeed = playerSpeed;
-		}
 
-		if(CanMoveHere(x+xSpeed, y + ySpeed, width, height, bgData)){
+		if(CanMoveHere(x+xSpeed, y+ySpeed, width, height, bgData)){
 			this.x += xSpeed;
 			this.y += ySpeed;
+			moving = true;
 		}
+
 	}
 
 	private void loadAnimations() {
 
-		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
+	BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-		animations = new BufferedImage[4][8];
+	animations = new BufferedImage[4][8];
 
-		for(int j=0; j < animations.length; j++) {
-			for(int i=0; i < animations[j].length; i++) {
-				animations[j][i] = img.getSubimage(i*75, j*75, 75, 75);
-			}
+	for(int j=0; j < animations.length; j++) {
+		for(int i=0; i < animations[j].length; i++) {
+			animations[j][i] = img.getSubimage(i*75, j*75, 75, 75);
 		}
 	}
 
-	public void loadbgData(int[][] bdData){
+
+	}
+
+	public void loadBgData(int[][] bgData){
 		this.bgData = bgData;
 	}
 
