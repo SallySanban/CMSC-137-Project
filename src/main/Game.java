@@ -16,7 +16,7 @@ public class Game implements Runnable {
 	private BackgroundManager bgManager;
 
 	public final static int TILE_DEFAULT_SIZE = 32;
-	public final static float SCALE = 1.5f;
+	public final static float SCALE = 1.3f;
 	public final static int TILES_IN_WIDTH = 26;
 	public final static int TILES_IN_HEIGHT = 20;
 	public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
