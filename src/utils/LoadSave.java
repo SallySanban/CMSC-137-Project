@@ -11,6 +11,7 @@ import main.Game;
 public class LoadSave {
 
 	public static final String PLAYER_ATLAS = "Enchantress.png";
+	public static final String ENEMY_ATLAS = "temporary-enemy.png";
 	public static final String BACKGROUND_ATLAS = "Tileset.png";
 	public static final String BACKGROUND_DATA = "Tileset.png";
 

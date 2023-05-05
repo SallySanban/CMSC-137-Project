@@ -13,11 +13,7 @@ import javax.imageio.ImageIO;
 import main.Game;
 import utils.LoadSave;
 
-public class Player extends Character{
-
-	static final int NORMAL_ANIMATION_SPEED = 50;
-	static final int ATTACKING_ANIMATION_SPEED = 12;
-	
+public class Enemy extends Character{
 	private BufferedImage[][] animations;
 	private int animationTick;
 	private int animationIndex;
@@ -27,7 +23,7 @@ public class Player extends Character{
 	private boolean attacking = false;
 	private boolean left, right, up, down;
 	private boolean jump;
-	float playerSpeed = 1.5f;
+	float playerSpeed = 2.7f;
 	private int[][] bgData;
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
@@ -40,7 +36,7 @@ public class Player extends Character{
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 
-	public Player(float x, float y, int width, int height) {
+	public Enemy(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
 		initHitbox(x, y, 35*Game.SCALE, 50*Game.SCALE);
@@ -90,18 +86,7 @@ public class Player extends Character{
 //				playerAction = FALLING;
 //		}
 
-		// Implementation below: "slow idle, fast attack" animation speed
-		// Make animation normal for now
-		animationSpeed = NORMAL_ANIMATION_SPEED;
-		if(moving) {			
-			playerAction = RUNNING;
-		} else {
-			playerAction = IDLE;
-		}
-		
-		// speed up animation iff attacking
 		if(attacking) {
-			animationSpeed = ATTACKING_ANIMATION_SPEED;
 			playerAction = ATTACK;
 		}
 
@@ -183,8 +168,7 @@ public class Player extends Character{
 	}
 
 	private void loadAnimations() {
-		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
-
+		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.ENEMY_ATLAS);
 		animations = new BufferedImage[4][8];
 
 		for(int j=0; j < animations.length; j++) {
