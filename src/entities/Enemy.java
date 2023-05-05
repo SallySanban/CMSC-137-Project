@@ -10,9 +10,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class Player extends Character{
-	static final int NORMAL_ANIMATION_SPEED = 50;
-	static final int ATTACKING_ANIMATION_SPEED = 17;	
+public class Enemy extends Character{
 	private BufferedImage[][] animations;
 	private int animationTick;
 	private int animationIndex;
@@ -21,9 +19,9 @@ public class Player extends Character{
 	private boolean moving = false;
 	private boolean attacking = false;
 	private boolean left, right, up, down;
-	private float playerSpeed = 1.2f;
+	private float enemySpeed = 1.2f;
 	
-	public Player(float x, float y) {
+	public Enemy(float x, float y) {
 		super(x, y);
 		this.hp = 100;
 		loadAnimations();
@@ -56,19 +54,15 @@ public class Player extends Character{
 	
 	private void setAnimation() {
 		int startAnimation = playerAction;
-
-		// Make animation normal for now
-		animationSpeed = NORMAL_ANIMATION_SPEED;
-		if(moving) {			
+		
+		if(moving) {
 			playerAction = RUNNING;
-		} else {
+		}
+		else {
 			playerAction = IDLE;
 		}
 		
-		
 		if(attacking) {
-			// speed up animation iff attacking
-			animationSpeed = ATTACKING_ANIMATION_SPEED;
 			playerAction = ATTACK;
 		}
 		
@@ -88,24 +82,24 @@ public class Player extends Character{
 		moving = false;
 		
 		if(left && !right) {
-			x -= playerSpeed;
+			x -= enemySpeed;
 			moving = true;
 		} else if(right && !left) {
-			x += playerSpeed;
+			x += enemySpeed;
 			moving = true;
 		}
 		
 		if(up && !down) {
-			y -= playerSpeed;
+			y -= enemySpeed;
 			moving = true;
 		} else if(down && !up) {
-			y += playerSpeed;
+			y += enemySpeed;
 			moving = true;
 		}
 	}
 	
 	private void loadAnimations() {
-		InputStream is = getClass().getResourceAsStream("/Enchantress.png");
+		InputStream is = getClass().getResourceAsStream("/temporary-enemy.png");
 		
 		try {
 			BufferedImage img = ImageIO.read(is);

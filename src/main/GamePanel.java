@@ -11,6 +11,9 @@ import inputs.MouseInput;
 public class GamePanel extends JPanel{
 	private MouseInput mouseInput;
 	private Game game;
+	static final int WINDOW_HEIGHT = 700;
+	static final int WINDOW_WIDTH = 1000;
+	
 	
 	public GamePanel(Game game) {
 		mouseInput = new MouseInput(this);
@@ -24,7 +27,7 @@ public class GamePanel extends JPanel{
 	}
 
 	private void setPanelSize() {
-		Dimension size = new Dimension(1000, 700);
+		Dimension size = new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
