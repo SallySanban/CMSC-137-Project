@@ -18,6 +18,7 @@ public class Player extends Character {
 	static final int NORMAL_ANIMATION_SPEED = 50;
 	static final int ATTACKING_ANIMATION_SPEED = 12;
 	
+	public int powerValue = 1;
 	private BufferedImage[][] animations;
 	private int i, enemyCount;
 	private int animationTick;
@@ -33,8 +34,7 @@ public class Player extends Character {
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
 	private boolean isAttacking = false;
-	private GamePanel gamePanel;
-	
+	private GamePanel gamePanel;	
 	private Enemy[] enemies;
 
 	//for jumping and gravity
@@ -93,7 +93,7 @@ public class Player extends Character {
 //				playerAction = FALLING;
 //		}
 
-		// Implementation below: "slow idle, fast attack" animation speed
+		// (Yves) Implementation improvement below: "slow idle, fast attack" animation speed
 		// Make animation normal for now
 		animationSpeed = NORMAL_ANIMATION_SPEED;
 		if(moving) {			
@@ -179,6 +179,7 @@ public class Player extends Character {
 	private void updateXPos(float xSpeed) {
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
 			hitbox.x += xSpeed;
+			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y);
 		}else{
 //			// (Yves) I commented this kasi there's a bug kapag going to the right towards a wall. Kapag wala it seems ok
 //			hitbox.x = GetEntityPosNextToWall(hitbox, xSpeed);
@@ -216,9 +217,11 @@ public class Player extends Character {
 		if (!isAttacking) {
 			isAttacking = true;
 			for (i=0; i<enemyCount; i++) {
-				if (enemies[i].hitbox.intersects(this.hitbox)) {
-					this.gamePanel.getGame().hitEnemy(i);
-					System.out.println("Killed enemy " + i + " which has intersected.");
+				if (enemies[i] != null) {
+					if (enemies[i].hitbox.intersects(this.hitbox)) {
+						this.gamePanel.getGame().hitEnemy(i);
+						System.out.println("Killed enemy " + i + " which has intersected.");
+					}
 				}
 			}
 			isAttacking = false;
@@ -232,6 +235,10 @@ public class Player extends Character {
 		this.enemyCount = gamePanel.getGame().currentEnemyIndex;
 		
 		attackEnemies();
+	}
+	
+	public void addPower() {
+		this.powerValue++;
 	}
 	
 	public boolean isLeft() {

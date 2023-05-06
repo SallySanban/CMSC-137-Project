@@ -10,11 +10,15 @@ import inputs.MouseInput;
 import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
+import javax.swing.JLabel;
+
 public class GamePanel extends JPanel{
 	private MouseInput mouseInput;
 	private Game game;
+	public JLabel menuText;
 
-	public GamePanel(Game game) {
+	public GamePanel(Game game, JLabel menuText) {
+		this.menuText = menuText;
 		mouseInput = new MouseInput(this);
 		this.game = game;
 

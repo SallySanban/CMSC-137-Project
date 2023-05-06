@@ -2,6 +2,10 @@ package main;
 
 import java.awt.Graphics;
 import java.util.Random;
+
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 import background.BackgroundManager;
 import entities.Player;
 import entities.Enemy;
@@ -34,14 +38,17 @@ public class Game implements Runnable {
 	private Random rand = new Random();
 	private int i;
 	public int currentEnemyIndex = 0;
+	public JLabel menuText;
 
 	public void hitEnemy(int index) {
 		
-		// temporarily kill enemy for now
+		// kill enemy for now
 		for (i=index; i<currentEnemyIndex-1; i++) {
 			enemies[i] = enemies[i+1];
 		}
 		enemies[currentEnemyIndex--] = null;
+		player.addPower();
+		gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
 	}
 	
 	// variables for background manager
@@ -49,9 +56,9 @@ public class Game implements Runnable {
 	
 	public Game() {
 		initialize();
-		gamePanel = new GamePanel(this);
-
-		gameWindow = new GameWindow(gamePanel);
+		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
+		gamePanel = new GamePanel(this, menuText);
+		gameWindow = new GameWindow(gamePanel, player);
 		gamePanel.requestFocus();
 
 		startGameLoop();
