@@ -35,6 +35,15 @@ public class Game implements Runnable {
 	private int i;
 	public int currentEnemyIndex = 0;
 
+	public void hitEnemy(int index) {
+		
+		// temporarily kill enemy for now
+		for (i=index; i<currentEnemyIndex-1; i++) {
+			enemies[i] = enemies[i+1];
+		}
+		enemies[currentEnemyIndex--] = null;
+	}
+	
 	// variables for background manager
 	private BackgroundManager bgManager;
 	

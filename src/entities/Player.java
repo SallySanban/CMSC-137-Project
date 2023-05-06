@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import entities.Enemy;
 import main.Game;
 import utils.LoadSave;
+import main.GamePanel;
 
 public class Player extends Character {
 
@@ -32,6 +33,7 @@ public class Player extends Character {
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
 	private boolean isAttacking = false;
+	private GamePanel gamePanel;
 	
 	private Enemy[] enemies;
 
@@ -214,15 +216,21 @@ public class Player extends Character {
 		if (!isAttacking) {
 			isAttacking = true;
 			for (i=0; i<enemyCount; i++) {
-				
+				if (enemies[i].hitbox.intersects(this.hitbox)) {
+					this.gamePanel.getGame().hitEnemy(i);
+					System.out.println("Killed enemy " + i + " which has intersected.");
+				}
 			}
+			isAttacking = false;
 		}
 	}
 
-	public void setAttack(boolean attacking, Enemy[] currentEnemies, int enemyCount) {
+	public void setAttack(boolean attacking, GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
 		this.attacking = attacking;
-		this.enemies = currentEnemies;
-		this.enemyCount = enemyCount;
+		this.enemies = this.gamePanel.getGame().enemies;
+		this.enemyCount = gamePanel.getGame().currentEnemyIndex;
+		
 		attackEnemies();
 	}
 	
