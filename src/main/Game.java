@@ -62,7 +62,7 @@ public class Game implements Runnable {
 	// function that generates enemies according to the set RESPAWN_COUNT
 	private void generateEnemy() {
 		for (i=0; i<RESPAWN_COUNT; i++) {
-			enemies[currentEnemyIndex] = new Enemy(rand.nextFloat()*GAME_WIDTH, rand.nextFloat()*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+			enemies[currentEnemyIndex] = new Enemy(rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 			enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
 		}
 	}
