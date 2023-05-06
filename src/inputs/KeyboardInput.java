@@ -35,7 +35,7 @@ public class KeyboardInput implements KeyListener{
 			
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
-			gamePanel.getGame().getPlayer().setAttack(true);
+			gamePanel.getGame().getPlayer().setAttack(true, gamePanel.getGame().enemies, gamePanel.getGame().currentEnemyIndex);
 		} 		
 		
 	}

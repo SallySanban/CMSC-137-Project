@@ -30,9 +30,10 @@ public class Game implements Runnable {
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 	
 	// variables for enemies
-	private Enemy[] enemies = new Enemy[100];
+	public Enemy[] enemies = new Enemy[100];
 	private Random rand = new Random();
-	private int i, currentEnemyIndex = 0;
+	private int i;
+	public int currentEnemyIndex = 0;
 
 	// variables for background manager
 	private BackgroundManager bgManager;
@@ -74,7 +75,7 @@ public class Game implements Runnable {
 			enemies[i].update();
 		}
 	}
-
+	
 	public void render(Graphics g) {
 		bgManager.draw(g);
 		player.render(g);

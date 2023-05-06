@@ -7,18 +7,18 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
-
+import entities.Enemy;
 import main.Game;
 import utils.LoadSave;
 
-public class Player extends Character{
+public class Player extends Character {
 
 	static final int NORMAL_ANIMATION_SPEED = 50;
 	static final int ATTACKING_ANIMATION_SPEED = 12;
 	
 	private BufferedImage[][] animations;
+	private int i, enemyCount;
 	private int animationTick;
 	private int animationIndex;
 	private int animationSpeed = 50;
@@ -31,7 +31,9 @@ public class Player extends Character{
 	private int[][] bgData;
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
-
+	private boolean isAttacking = false;
+	
+	private Enemy[] enemies;
 
 	//for jumping and gravity
 	private float airSpeed = 0f;
@@ -70,9 +72,8 @@ public class Player extends Character{
 				attacking = false;
 			}
 		}
-
 	}
-
+	
 	private void setAnimation() {
 		int startAnimation = playerAction;
 
@@ -177,7 +178,8 @@ public class Player extends Character{
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
 			hitbox.x += xSpeed;
 		}else{
-			hitbox.x = GetEntityPosNextToWall(hitbox, xSpeed);
+//			// (Yves) I commented this kasi there's a bug kapag going to the right towards a wall. Kapag wala it seems ok
+//			hitbox.x = GetEntityPosNextToWall(hitbox, xSpeed);
 		}
 
 	}
@@ -207,10 +209,23 @@ public class Player extends Character{
 		down = false;
 	}
 
-	public void setAttack(boolean attacking) {
-		this.attacking = attacking;
+
+	private void attackEnemies() {
+		if (!isAttacking) {
+			isAttacking = true;
+			for (i=0; i<enemyCount; i++) {
+				
+			}
+		}
 	}
 
+	public void setAttack(boolean attacking, Enemy[] currentEnemies, int enemyCount) {
+		this.attacking = attacking;
+		this.enemies = currentEnemies;
+		this.enemyCount = enemyCount;
+		attackEnemies();
+	}
+	
 	public boolean isLeft() {
 		return left;
 	}
