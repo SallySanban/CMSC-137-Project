@@ -32,9 +32,10 @@ public class Game implements Runnable {
 	public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE *TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
+	public final static int MAX_ENEMY_COUNT = 100;
 	
 	// variables for enemies
-	public Enemy[] enemies = new Enemy[100];
+	public Enemy[] enemies = new Enemy[900];
 	private Random rand = new Random();
 	private int i;
 	public int currentEnemyIndex = 0;
@@ -79,9 +80,15 @@ public class Game implements Runnable {
 	// function that generates enemies according to the set RESPAWN_COUNT
 	private void generateEnemy() {
 		for (i=0; i<RESPAWN_COUNT; i++) {
-			enemies[currentEnemyIndex] = new Enemy(rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
-			enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
+			if (currentEnemyIndex < MAX_ENEMY_COUNT) {
+				enemies[currentEnemyIndex] = new Enemy(0.9f*rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+				enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
+			} else {
+				System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
+				break;
+			}
 		}
+		System.out.println("There are now " + currentEnemyIndex + " enemies.");
 	}
 
 	public void update() {
