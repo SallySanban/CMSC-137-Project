@@ -1,14 +1,16 @@
 package main;
 
+// java imports
 import java.awt.Graphics;
 import java.util.Random;
-
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import background.BackgroundManager;
-import entities.Player;
-import entities.Enemy;
+
+// character imports
+import entities.*;
+import entities.zombies.*;
+import entities.zombies.parent.*;
 
 public class Game implements Runnable {
 	
@@ -35,7 +37,7 @@ public class Game implements Runnable {
 	public final static int MAX_ENEMY_COUNT = 100;
 	
 	// variables for enemies
-	public Enemy[] enemies = new Enemy[900];
+	public Zombie[] enemies = new Zombie[900];
 	private Random rand = new Random();
 	private int i;
 	public int currentEnemyIndex = 0;
@@ -81,7 +83,7 @@ public class Game implements Runnable {
 	private void generateEnemy() {
 		for (i=0; i<RESPAWN_COUNT; i++) {
 			if (currentEnemyIndex < MAX_ENEMY_COUNT) {
-				enemies[currentEnemyIndex] = new Enemy(0.9f*rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+				enemies[currentEnemyIndex] = new ZombieMan(0.9f*rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 				enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
 			} else {
 				System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
