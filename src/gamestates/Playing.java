@@ -58,7 +58,10 @@ public class Playing extends State implements Statemethods{
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		for(int i = 0; i<3; i++){
+			g.drawImage(backgroundImg, (i*Game.GAME_WIDTH)-xLvlOffset, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		}
+
 		bgManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 
