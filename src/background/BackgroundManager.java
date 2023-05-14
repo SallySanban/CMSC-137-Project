@@ -31,11 +31,12 @@ public class BackgroundManager {
 		}
 	}
 
-	public void draw(Graphics g){
+	public void draw(Graphics g, int lvlOffset){
+
 		for(int j = 0; j<Game.TILES_IN_HEIGHT; j++){
-			for(int i = 0; i<Game.TILES_IN_WIDTH; i++){
+			for(int i = 0; i<Game.TILES_IN_WIDTH*3; i++){
 				int index = background.getSpriteIndex(i, j);
-				g.drawImage(bgSprite[index], Game.TILES_SIZE*i,  Game.TILES_SIZE*j,  Game.TILES_SIZE,  Game.TILES_SIZE, null);
+				g.drawImage(bgSprite[index], Game.TILES_SIZE*i - lvlOffset,  Game.TILES_SIZE*j,  Game.TILES_SIZE,  Game.TILES_SIZE, null);
 			}
 		}
 	}
