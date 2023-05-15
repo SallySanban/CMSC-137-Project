@@ -24,7 +24,7 @@ public class KeyboardInput implements KeyListener{
 		
 		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			gamePanel.getGame().getPlayer().setUp(true);
+			gamePanel.getGame().getPlayer().setJump(true);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
 			gamePanel.getGame().getPlayer().setLeft(true);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
@@ -46,7 +46,7 @@ int keyCode = e.getKeyCode();
 		
 		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			gamePanel.getGame().getPlayer().setUp(false);
+			gamePanel.getGame().getPlayer().setJump(false);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
 			gamePanel.getGame().getPlayer().setLeft(false);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {

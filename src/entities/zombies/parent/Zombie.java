@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
 import entities.Character;
+import entities.Player;
 import main.Game;
 import utils.LoadSave;
 
@@ -36,7 +37,8 @@ public class Zombie extends Character {
 	protected int[][] bgData;
 	protected float xDrawOffset = 9 * Game.SCALE;
 	protected float yDrawOffset = 2 * Game.SCALE;
-
+	protected Player player;
+	protected float xSpeed = 0;
 
 	//for jumping and gravity
 	protected float airSpeed = 0f;
@@ -44,20 +46,84 @@ public class Zombie extends Character {
 	protected float jumpSpeed = -2.25f * Game.SCALE;
 	protected float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	protected boolean inAir = false;
+	protected float movement_stabilization_constant = 40.994f;
 
 	
 	// constuctor
-	public Zombie(float x, float y, int width, int height) {
+	public Zombie(float x, float y, int width, int height, Player player) {
 		super(x, y, width, height);
 		initHitbox(x, y, 35*Game.SCALE, 50*Game.SCALE);
+		this.player = player;
 	}
 	
+	
+	private void followPlayer() {
+		
+		
+		// PART 1: Update X positions
+		
+		// first index is textField location, and the second index is hitbox Position
+		float[] playerXPosition = player.XPositions();
+		
+		// if on left side of player
+		if (this.hitbox.x > playerXPosition[1]) {
+			xSpeed = 0-(playerSpeed*0.3f);
+			
+		// if on right side of player
+		} else if (this.hitbox.x < playerXPosition[1]) {
+			xSpeed = 0+(playerSpeed*0.3f);
+			
+		} else {
+			xSpeed = 0;
+		}
+		
+		// if can move to next direction, move there
+		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
+			hitbox.x += (xSpeed);
+			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y); 		
+		
+		// else, if cannot move, try jumping
+		} else {
+			jump();
+		}
+		
+		
+		
+		// PART 2: Update Y Positions
+		
+		// if not set in air, check if it is so.
+		if(!inAir){
+			if(!IsEntityOnFloor(hitbox, bgData)){
+				inAir = true;
+			}
+		}
+
+		// now set data if it is so.
+		if (inAir) {
+			
+			// case of when such entity can move in next direction
+			if (CanMoveHere(hitbox.x, hitbox.y+airSpeed, hitbox.width, hitbox.height, bgData)){
+				hitbox.y += airSpeed;
+				airSpeed += gravity;
+			
+			
+			// case of when such entity cannot move in next direction
+			} else {
+				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox,airSpeed) + movement_stabilization_constant; 
+				if(airSpeed > 0) {
+					resetInAir();
+				} else {
+					airSpeed = fallSpeedAfterCollision;
+				}
+			}
+		} 
+	}
 	
 	// update function
 	public void update() {
 		updateAnimationTick();
 		setAnimation();
-		updatePosition();
+		followPlayer();
 //		updateHitbox();
 	}
 
@@ -119,49 +185,6 @@ public class Zombie extends Character {
 		animationIndex = 0;
 
 	}
-	
-	// updates the position of an enemy
-	protected void updatePosition() {
-		moving = false;
-		if(!left && !right && !inAir)
-			return;
-
-		float xSpeed = 0;
-
-		if(jump)
-			jump();
-
-		if(left)
-			xSpeed -= playerSpeed;
-
-		if(right)
-			xSpeed += playerSpeed;
-
-		if(!inAir){
-			if(!IsEntityOnFloor(hitbox, bgData)){
-				inAir = true;
-			}
-		}
-
-		if(inAir){
-			if(CanMoveHere(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, bgData)){
-				hitbox.y += airSpeed;
-				airSpeed += gravity;
-				updateXPos(xSpeed);
-			}
-			else{
-				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed) + 40; //
-				if(airSpeed > 0)
-					resetInAir();
-				else
-					airSpeed = fallSpeedAfterCollision;
-				updateXPos(xSpeed);
-			}
-		}else
-			updateXPos(xSpeed);
-		moving = true;
-	}
-	
 
 	// function that makes an enemy jump
 	protected void jump() {

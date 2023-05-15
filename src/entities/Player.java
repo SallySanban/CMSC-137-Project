@@ -238,6 +238,13 @@ public class Player extends Character {
 		attackEnemies();
 	}
 	
+	// first index is textField location, and the second index is hitbox Position
+	public float[] XPositions() {
+//		System.out.println("Got X position " + textField.getLocation().x + ".");
+		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
+		return returnValue;
+	}
+	
 	public void addPower() {
 		this.powerValue++;
 	}

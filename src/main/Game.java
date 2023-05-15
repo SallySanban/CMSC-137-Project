@@ -26,6 +26,7 @@ public class Game implements Runnable {
 	private final static long RESPAWN_TIME = 3;
 	private final int RESPAWN_COUNT = 3;		
 	private final static int TILE_DEFAULT_SIZE = 32;
+	private final static float ENEMY_ENTITY_GRAPHICS_MULTIPLIER = 1.3f;
 	public final static int NORMAL_ENTITY_WIDTH = 65;
 	public final static int NORMAL_ENTITY_HEIGHT = 70;
 	public final static float SCALE = 1.3f;
@@ -83,7 +84,13 @@ public class Game implements Runnable {
 	private void generateEnemy() {
 		for (i=0; i<RESPAWN_COUNT; i++) {
 			if (currentEnemyIndex < MAX_ENEMY_COUNT) {
-				enemies[currentEnemyIndex] = new ZombieMan(0.9f*rand.nextFloat()*GAME_WIDTH, (0.5f*rand.nextFloat())*GAME_HEIGHT, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+				enemies[currentEnemyIndex] = new ZombieMan(
+						0.9f*rand.nextFloat()*GAME_WIDTH, 
+						(0.5f*rand.nextFloat())*GAME_HEIGHT, 
+						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
+						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
+						this.player
+				);
 				enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
 			} else {
 				System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
