@@ -3,6 +3,8 @@ package main;
 // java imports
 import java.awt.Graphics;
 import java.util.Random;
+import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import background.BackgroundManager;
@@ -41,9 +43,11 @@ public class Game implements Runnable {
 	public Zombie[] enemies = new Zombie[900];
 	private Random rand = new Random();
 	private int i;
+	private Font fontStyle = new Font(Font.SANS_SERIF,  Font.BOLD, 20);
 	public int currentEnemyIndex = 0;
 	public JLabel menuText;
 
+	// function that is called when an enemy has been hit
 	public void hitEnemy(int index) {
 		
 		// kill enemy for now
@@ -61,6 +65,8 @@ public class Game implements Runnable {
 	public Game() {
 		initialize();
 		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
+		menuText.setFont(fontStyle);
+		menuText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		gamePanel = new GamePanel(this, menuText);
 		gameWindow = new GameWindow(gamePanel, player);
 		gamePanel.requestFocus();

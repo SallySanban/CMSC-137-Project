@@ -124,7 +124,6 @@ public class Zombie extends Character {
 		updateAnimationTick();
 		setAnimation();
 		followPlayer();
-//		updateHitbox();
 	}
 
 	
@@ -161,13 +160,6 @@ public class Zombie extends Character {
 		else {
 			playerAction = IDLE;
 		}
-
-//		if(!inAir){
-//			if(airSpeed > 0)
-//				playerAction = JUMP;
-//			else
-//				playerAction = FALLING;
-//		}
 
 		if(attacking) {
 			playerAction = ATTACK;
