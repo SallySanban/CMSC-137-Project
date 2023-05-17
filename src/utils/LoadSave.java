@@ -11,8 +11,23 @@ import main.Game;
 public class LoadSave {
 
 	public static final String PLAYER_ATLAS = "Enchantress.png";
+	public static final String ENEMY_ATLAS = "temporary-enemy.png";
 	public static final String BACKGROUND_ATLAS = "Tileset.png";
 	public static final String BACKGROUND_DATA = "Tileset.png";
+	
+	// Enemy atlas declarations for "Zombie Man"
+	public static final String ZOMBIE_MAN_IDLE_ATLAS = "Enemies/Zombie Man/Idle_r.png";
+	public static final String ZOMBIE_MAN_RUNNING_ATLAS = "Enemies/Zombie Man/Run_r.png";
+	public static final String ZOMBIE_MAN_ATTACKING_ATLAS = "Enemies/Zombie Man/Idle_r.png";
+	public static final String ZOMBIE_MAN_JUMPING_ATLAS = "Enemies/Zombie Man/Jump_r.png";
+	public static final String ZOMBIE_MAN_FALLING_ATLAS = "Enemies/Zombie Man/Idle_r.png";
+	
+	
+//	public static final int IDLE = 0;
+//	public static final int RUNNING = 1;
+//	public static final int ATTACK = 2;
+//	public static final int JUMP = 3;
+//	public static final int FALLING = 4;
 
 	public static BufferedImage GetSpriteAtlas(String fileName){
 		BufferedImage img = null;
