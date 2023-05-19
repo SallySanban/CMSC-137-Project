@@ -11,8 +11,8 @@ public class HelpMethods {
 		if(!IsSolid(x, y, bgData))
 			if(!IsSolid(x+width, y+height, bgData))
 				if(!IsSolid(x+width, y, bgData))
-					if(!IsSolid(x, y+height, bgData))
-						return true;
+					if(!IsSolid(x, y+height, bgData)) {
+						return true;}
 		return false;
 	}
 

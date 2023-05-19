@@ -18,8 +18,6 @@ public class Constants {
 					return 7;
 				case ATTACK:
 					return 6;
-
-
 				default:
 					return 1;
 			}

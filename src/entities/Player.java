@@ -7,14 +7,21 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
-
+import entities.Enemy;
 import main.Game;
 import utils.LoadSave;
+import main.GamePanel;
+import entities.zombies.parent.*;
 
-public class Player extends Character{
+public class Player extends Character {
+
+	static final int NORMAL_ANIMATION_SPEED = 50;
+	static final int ATTACKING_ANIMATION_SPEED = 12;
+	
+	public int powerValue = 1;
 	private BufferedImage[][] animations;
+	private int i, enemyCount;
 	private int animationTick;
 	private int animationIndex;
 	private int animationSpeed = 50;
@@ -23,11 +30,13 @@ public class Player extends Character{
 	private boolean attacking = false;
 	private boolean left, right, up, down;
 	private boolean jump;
-	float playerSpeed = 2.7f;
+	float playerSpeed = 1.5f;
 	private int[][] bgData;
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
-
+	private boolean isAttacking = false;
+	private GamePanel gamePanel;	
+	private Zombie[] zombies;
 
 	//for jumping and gravity
 	private float airSpeed = 0f;
@@ -72,9 +81,8 @@ public class Player extends Character{
 				attacking = false;
 			}
 		}
-
 	}
-
+	
 	private void setAnimation() {
 		int startAnimation = playerAction;
 
@@ -92,7 +100,18 @@ public class Player extends Character{
 //				playerAction = FALLING;
 //		}
 
+		// (Yves) Implementation improvement below: "slow idle, fast attack" animation speed
+		// Make animation normal for now
+		animationSpeed = NORMAL_ANIMATION_SPEED;
+		if(moving) {			
+			playerAction = RUNNING;
+		} else {
+			playerAction = IDLE;
+		}
+		
+		// speed up animation iff attacking
 		if(attacking) {
+			animationSpeed = ATTACKING_ANIMATION_SPEED;
 			playerAction = ATTACK;
 		}
 
@@ -167,8 +186,10 @@ public class Player extends Character{
 	private void updateXPos(float xSpeed) {
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
 			hitbox.x += xSpeed;
+			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y);
 		}else{
-			hitbox.x = GetEntityPosNextToWall(hitbox, xSpeed);
+//			// (Yves) I commented this kasi there's a bug kapag going to the right towards a wall. Kapag wala it seems ok
+//			hitbox.x = GetEntityPosNextToWall(hitbox, xSpeed);
 		}
 
 	}
@@ -198,10 +219,42 @@ public class Player extends Character{
 		down = false;
 	}
 
-	public void setAttack(boolean attacking) {
-		this.attacking = attacking;
+
+	private void attackEnemies() {
+		if (!isAttacking) {
+			isAttacking = true;
+			for (i=0; i<enemyCount; i++) {
+				if (zombies[i] != null) {
+					if (zombies[i].hitbox.intersects(this.hitbox)) {
+						this.gamePanel.getGame().hitEnemy(i);
+						System.out.println("Killed enemy " + i + " which has intersected.");
+					}
+				}
+			}
+			isAttacking = false;
+		}
 	}
 
+	public void setAttack(boolean attacking, GamePanel gamePanel) {
+		this.gamePanel = gamePanel;
+		this.attacking = attacking;
+		this.zombies = this.gamePanel.getGame().enemies;
+		this.enemyCount = gamePanel.getGame().currentEnemyIndex;
+		
+		attackEnemies();
+	}
+	
+	// first index is textField location, and the second index is hitbox Position
+	public float[] XPositions() {
+//		System.out.println("Got X position " + textField.getLocation().x + ".");
+		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
+		return returnValue;
+	}
+	
+	public void addPower() {
+		this.powerValue++;
+	}
+	
 	public boolean isLeft() {
 		return left;
 	}
