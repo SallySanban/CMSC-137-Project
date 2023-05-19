@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import background.BackgroundManager;
 import entities.Player;
 import main.Game;
+import main.GamePanel;
 import utils.LoadSave;
 
 public class Playing extends State implements Statemethods{
@@ -25,6 +26,7 @@ public class Playing extends State implements Statemethods{
 		super(game);
 		initialize();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.GAME_BG_IMAGE);
+		
 
 	}
 	private void initialize() {
@@ -70,7 +72,7 @@ public class Playing extends State implements Statemethods{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
-			player.setAttack(true);
+			player.setAttack(true, game.getGamePanel());
 		}
 
 	}
@@ -95,34 +97,45 @@ public class Playing extends State implements Statemethods{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(true);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(true);
-			break;
-		case KeyEvent.VK_SPACE:
+		int keyCode = e.getKeyCode();
+				
+		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
+		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
 			player.setJump(true);
-			break;
-
-	}
-
+		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
+			player.setLeft(true);
+		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
+			player.setDown(true);
+		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
+			player.setRight(true);
+			
+			
+		// Yves also added space for easier debugging attack functionality
+		} else if (keyCode == KeyEvent.VK_SPACE) {
+			player.setAttack(true, game.getGamePanel());
+		} 	
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(false);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(false);
-			break;
-		case KeyEvent.VK_SPACE:
+		
+		int keyCode = e.getKeyCode();
+		
+		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
+		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
 			player.setJump(false);
-			break;
-		}
+		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
+			player.setLeft(false);
+		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
+			player.setDown(false);
+		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
+			player.setRight(false);
+			
+			
+		// Yves also added space for easier debugging attack functionality
+		} else if (keyCode == KeyEvent.VK_SPACE) {
+			player.setAttack(false, game.getGamePanel());
+		} 	
 	}
 
 	public void windowFocusLost() {
