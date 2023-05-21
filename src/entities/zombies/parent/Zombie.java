@@ -68,8 +68,6 @@ public class Zombie extends Character {
 		// if on left side of player
 		if (this.hitbox.x > playerXPosition[1]) {
 			xSpeed = 0-(playerSpeed*0.3f);
-			System.out.println("this.hitbox.x = " + this.hitbox.x);
-			System.out.println("playerXPosition[1] = " + playerXPosition[1]);
 			
 		// if on right side of player
 		} else if (this.hitbox.x < playerXPosition[1]) {

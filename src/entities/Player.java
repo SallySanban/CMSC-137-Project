@@ -183,10 +183,8 @@ public class Player extends Character {
 	}
 
 	private void updateXPos(float xSpeed) {
-		System.out.println(xSpeed + "\n");
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
 			hitbox.x += xSpeed;
-			System.out.println("current hitbox.x: " + hitbox.x + "\n");
 			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y);
 		}else{
 //			// (Yves) I commented this kasi there's a bug kapag going to the right towards a wall. Kapag wala it seems ok
@@ -247,8 +245,7 @@ public class Player extends Character {
 	
 	// first index is textField location, and the second index is hitbox Position
 	public float[] XPositions() {
-//		System.out.println("Got X position " + textField.getLocation().x + ".");
-		float[] returnValue = {this.textField.getLocation().x, hitbox.x};
+		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
 		return returnValue;
 	}
 	
