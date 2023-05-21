@@ -8,6 +8,7 @@ import java.awt.image.RasterFormatException;
 import main.Game;
 import utils.LoadSave;
 import entities.Player;
+import main.GamePanel;
 import entities.zombies.parent.*;
 
 

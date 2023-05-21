@@ -99,37 +99,42 @@ public class Game implements Runnable {
 
 	// function that generates enemies according to the set RESPAWN_COUNT
 	private void generateEnemy() {
-		for (i=0; i<RESPAWN_COUNT; i++) {
-			if (currentEnemyIndex < MAX_ENEMY_COUNT) {
-				enemies[currentEnemyIndex] = new ZombieMan(
-						0.9f*rand.nextFloat()*GAME_WIDTH, 
-						(0.5f*rand.nextFloat())*GAME_HEIGHT, 
-						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
-						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
-						this.player
-				);
-				enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
-			} else {
-				System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
-				break;
+		if(!playing.gamePaused) {
+			for (i=0; i<RESPAWN_COUNT; i++) {
+				if (currentEnemyIndex < MAX_ENEMY_COUNT) {
+					enemies[currentEnemyIndex] = new ZombieMan(
+							0.9f*rand.nextFloat()*GAME_WIDTH, 
+							(0.5f*rand.nextFloat())*GAME_HEIGHT, 
+							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
+							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
+							this.player
+					);
+					enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
+				} else {
+					System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
+					break;
+				}
 			}
+			System.out.println("There are now " + currentEnemyIndex + " enemies.");
 		}
-		System.out.println("There are now " + currentEnemyIndex + " enemies.");
+		
 	}
 
 	public void update() {
-		switch(GameState.state){
-		case MENU:
-			menu.update();
-			break;
-		case PLAYING:
-			playing.update();
-			for (i=0; i<currentEnemyIndex; i++) {
-				enemies[i].update();
+		if(!playing.gamePaused) {
+			switch(GameState.state){
+			case MENU:
+				menu.update();
+				break;
+			case PLAYING:
+				playing.update();
+				for (i=0; i<currentEnemyIndex; i++) {
+					enemies[i].update();
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
 		
 		// player.update();

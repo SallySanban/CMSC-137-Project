@@ -21,6 +21,7 @@ public class Playing extends State implements Statemethods{
 	private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
 	private int maxlvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 	private BufferedImage backgroundImg;
+	public boolean gamePaused = false;
 
 	public Playing(Game game) {
 		super(game);
@@ -37,9 +38,12 @@ public class Playing extends State implements Statemethods{
 
 	@Override
 	public void update() {
-		bgManager.update();
-		player.update();
-		//checkCloseToBorder();
+		if(!gamePaused) {
+			bgManager.update();
+			player.update();
+			//checkCloseToBorder();
+		}
+		
 
 	}
 
@@ -115,7 +119,13 @@ public class Playing extends State implements Statemethods{
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
 			player.setAttack(true, game.getGamePanel());
-		} 	
+		}
+		
+		else if(keyCode == KeyEvent.VK_ESCAPE) {
+			gamePaused = true;
+			GameState.state = GameState.MENU;
+			
+		}
 	}
 
 	@Override
@@ -146,5 +156,9 @@ public class Playing extends State implements Statemethods{
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public boolean getPaused() {
+		return gamePaused;
 	}
 }
