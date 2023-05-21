@@ -58,14 +58,16 @@ public class Player extends Character {
 //		updateHitbox();
 	}
 
-	public void render(Graphics g, int lvlOffset) {
+	public void render(Graphics g) {
 //		drawHitbox(g);
 
 		if(left) {
-			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75 - lvlOffset, (int) (hitbox.y - yDrawOffset), -width, height, null);
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75 - lvlOffset, (int) (hitbox.y - yDrawOffset), -width, height, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75, (int) (hitbox.y - yDrawOffset), -width, height, null);
 		}
 		else {
-			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
 		}
 	}
 
