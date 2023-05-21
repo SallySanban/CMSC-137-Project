@@ -2,6 +2,9 @@ package main;
 
 // java imports
 import java.awt.Graphics;
+import gamestates.GameState;
+import gamestates.Menu;
+import gamestates.Playing;
 import java.util.Random;
 import java.awt.Component;
 import java.awt.Font;
@@ -22,6 +25,12 @@ public class Game implements Runnable {
 	private Thread gameThread;
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
+
+	private Playing playing;
+	private Menu menu;
+
+
+	// public final static int TILE_DEFAULT_SIZE = 32;
 	private Player player;
 	
 	// static declarations 
@@ -75,6 +84,8 @@ public class Game implements Runnable {
 	}
 
 	private void initialize() {
+		menu = new Menu(this);
+		playing = new Playing(this);
 		bgManager = new BackgroundManager(this);
 		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 		player.loadBgData(bgManager.getCurrBg().getBgData());
@@ -107,19 +118,42 @@ public class Game implements Runnable {
 	}
 
 	public void update() {
-		player.update();
-		bgManager.update();
-		for (i=0; i<currentEnemyIndex; i++) {
-			enemies[i].update();
+		switch(GameState.state){
+		case MENU:
+			menu.update();
+			break;
+		case PLAYING:
+			playing.update();
+			for (i=0; i<currentEnemyIndex; i++) {
+				enemies[i].update();
+			}
+			break;
+		default:
+			break;
 		}
+		
+		// player.update();
+		// bgManager.update();
+		
 	}
 	
 	public void render(Graphics g) {
-		bgManager.draw(g);
-		player.render(g);
-		for (i=0; i<currentEnemyIndex; i++) {
+		switch(GameState.state){
+		case MENU:
+			menu.draw(g);
+			break;
+		case PLAYING:
+			playing.draw(g);
+			for (i=0; i<currentEnemyIndex; i++) {
 			enemies[i].render(g);
+			}
+			break;
+		default:
+			break;
 		}
+		// bgManager.draw(g);
+		// player.render(g);
+		
 
 	}
 
@@ -166,10 +200,20 @@ public class Game implements Runnable {
 	}
 
 	public void windowFocusLost() {
-		player.resetDirectionBooleans();
+		if(GameState.state == GameState.PLAYING){
+			playing.getPlayer().resetDirectionBooleans();
+		}
 	}
 
-	public Player getPlayer() {
-		return player;
+	public Menu getMenu(){
+		return menu;
+	}
+
+	public Playing getPlaying(){
+		return playing;
+	}
+
+	public GamePanel getGamePanel(){
+		return this.gamePanel;
 	}
 }

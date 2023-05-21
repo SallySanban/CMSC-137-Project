@@ -66,16 +66,16 @@ public class Zombie extends Character {
 		float[] playerXPosition = player.XPositions();
 		
 		// if on left side of player
-		if (this.hitbox.x > playerXPosition[1]) {
-			xSpeed = 0-(playerSpeed*0.3f);
-			
-		// if on right side of player
-		} else if (this.hitbox.x < playerXPosition[1]) {
-			xSpeed = 0+(playerSpeed*0.3f);
-			
-		} else {
-			xSpeed = 0;
-		}
+//		if (this.hitbox.x > playerXPosition[1]) {
+//			xSpeed = 0-(playerSpeed*0.3f);
+//			
+//		// if on right side of player
+//		} else if (this.hitbox.x < playerXPosition[1]) {
+//			xSpeed = 0+(playerSpeed*0.3f);
+//			
+//		} else {
+//			xSpeed = 0;
+//		}
 		
 		// if can move to next direction, move there
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){

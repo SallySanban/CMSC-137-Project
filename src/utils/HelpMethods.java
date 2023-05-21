@@ -17,19 +17,20 @@ public class HelpMethods {
 	}
 
 	public static boolean IsSolid(float x, float y, int[][] bgData){
-		float xIndex = x / Game.TILES_SIZE;
-		float yIndex = y / Game.TILES_SIZE;
 
-		if(x < 0 || x >= Game.GAME_WIDTH)
+		int maxWidth = bgData[0].length*Game.TILES_SIZE;
+
+		if(x < 0 || x >= maxWidth)
 			return true;
 		if(y < 0 || y >= Game.GAME_HEIGHT)
 			return true;
 
+		float xIndex = x / Game.TILES_SIZE;
+		float yIndex = y / Game.TILES_SIZE;
+
 		int value = bgData[(int) yIndex][(int) xIndex];
 
 		if(value >= 60 || value < 0 || value != 58)
-			return true;
-		if(x < 0 || x >= Game.GAME_WIDTH)
 			return true;
 		return false;
 	}

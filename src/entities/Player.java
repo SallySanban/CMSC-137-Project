@@ -60,11 +60,13 @@ public class Player extends Character {
 
 	public void render(Graphics g) {
 //		drawHitbox(g);
-		
+
 		if(left) {
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75 - lvlOffset, (int) (hitbox.y - yDrawOffset), -width, height, null);
 			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75, (int) (hitbox.y - yDrawOffset), -width, height, null);
 		}
 		else {
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
 			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
 		}
 	}
@@ -180,7 +182,6 @@ public class Player extends Character {
 	private void resetInAir() {
 		inAir = false;
 		airSpeed = 0;
-
 	}
 
 	private void updateXPos(float xSpeed) {
@@ -246,7 +247,6 @@ public class Player extends Character {
 	
 	// first index is textField location, and the second index is hitbox Position
 	public float[] XPositions() {
-//		System.out.println("Got X position " + textField.getLocation().x + ".");
 		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
 		return returnValue;
 	}
@@ -290,6 +290,5 @@ public class Player extends Character {
 	public void setJump(boolean jump){
 		this.jump = jump;
 	}
-
 
 }

@@ -2,6 +2,8 @@ package inputs;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import gamestates.GameState;
 import main.GamePanel;
 
 public class KeyboardInput implements KeyListener{
@@ -19,40 +21,32 @@ public class KeyboardInput implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
-		int keyCode = e.getKeyCode();
-		
-		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
-		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			gamePanel.getGame().getPlayer().setJump(true);
-		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
-			gamePanel.getGame().getPlayer().setLeft(true);
-		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
-			gamePanel.getGame().getPlayer().setDown(true);
-		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-			gamePanel.getGame().getPlayer().setRight(true);
-			
-			
-		// Yves also added space for easier debugging attack functionality
-		} else if (keyCode == KeyEvent.VK_SPACE) {
-			gamePanel.getGame().getPlayer().setAttack(true, gamePanel);
-		} 		
-		
+		switch(GameState.state){
+		case MENU:
+			gamePanel.getGame().getMenu().keyPressed(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().keyPressed(e);
+			break;
+		default:
+			break;
+
+		}
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-int keyCode = e.getKeyCode();
-		
-		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
-		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			gamePanel.getGame().getPlayer().setJump(false);
-		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
-			gamePanel.getGame().getPlayer().setLeft(false);
-		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
-			gamePanel.getGame().getPlayer().setDown(false);
-		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-			gamePanel.getGame().getPlayer().setRight(false);
+		switch(GameState.state){
+		case MENU:
+			gamePanel.getGame().getMenu().keyReleased(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().keyReleased(e);
+			break;
+		default:
+			break;
+
 		}
 	}
 	
