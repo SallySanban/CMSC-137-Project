@@ -4,6 +4,7 @@ package main;
 import java.awt.Graphics;
 import gamestates.GameState;
 import gamestates.Menu;
+import gamestates.Paused;
 import gamestates.Playing;
 import java.util.Random;
 import java.awt.Component;
@@ -28,6 +29,7 @@ public class Game implements Runnable {
 
 	private Playing playing;
 	private Menu menu;
+	private Paused paused;
 
 
 	// public final static int TILE_DEFAULT_SIZE = 32;
@@ -86,6 +88,7 @@ public class Game implements Runnable {
 	private void initialize() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		paused = new Paused(this);
 		bgManager = new BackgroundManager(this);
 		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 		player.loadBgData(bgManager.getCurrBg().getBgData());
@@ -132,6 +135,9 @@ public class Game implements Runnable {
 					enemies[i].update();
 				}
 				break;
+			case PAUSED:
+				paused.update();
+				break;
 			default:
 				break;
 			}
@@ -152,6 +158,9 @@ public class Game implements Runnable {
 			for (i=0; i<currentEnemyIndex; i++) {
 			enemies[i].render(g);
 			}
+			break;
+		case PAUSED:
+			paused.draw(g);
 			break;
 		default:
 			break;
@@ -216,6 +225,10 @@ public class Game implements Runnable {
 
 	public Playing getPlaying(){
 		return playing;
+	}
+	
+	public Paused getPaused() {
+		return paused;
 	}
 
 	public GamePanel getGamePanel(){

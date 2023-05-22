@@ -23,6 +23,8 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 		case PLAYING:
 			gamePanel.getGame().getPlaying().mouseClicked(e);
 			break;
+		case PAUSED:
+			gamePanel.getGame().getPaused().mouseClicked(e);
 		default:
 			break;
 

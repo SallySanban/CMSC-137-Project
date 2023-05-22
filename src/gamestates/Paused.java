@@ -7,9 +7,9 @@ import java.awt.event.MouseEvent;
 
 import main.Game;
 
-public class Menu extends State implements Statemethods {
+public class Paused extends State implements Statemethods {
 
-	public Menu(Game game) {
+	public Paused(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
@@ -53,7 +53,8 @@ public class Menu extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			game.getPlaying().gamePaused = false;
 			GameState.state = GameState.PLAYING;
 		}
 
