@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+import javax.swing.*;
+
 import chats.Client;
 import chats.Server;
 import main.Game;
@@ -25,7 +27,8 @@ public class Paused extends State implements Statemethods {
 
 	@Override
 	public void draw(Graphics g) {
-
+		g.setColor(Color.black);
+		g.drawString("THIS GAME IS PAUSED", Game.GAME_WIDTH/2, Game.GAME_HEIGHT/2);
 	}
 
 	@Override

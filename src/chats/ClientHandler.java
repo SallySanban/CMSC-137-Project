@@ -1,5 +1,8 @@
 package chats;
 
+import java.awt.Color;
+import javax.swing.*;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

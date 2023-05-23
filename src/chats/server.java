@@ -1,14 +1,18 @@
 package chats;
 
-import java.io.IOException;
+import java.awt.Color;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
+import java.io.*;
+
+import javax.swing.*;
+import java.awt.Color;
 
 public class Server {
 	private ServerSocket serverSocket;
-	private Thread chatServer;
 	
-	public Server(ServerSocket serverSocket) {
+	public Server(ServerSocket serverSocket) {			
 		this.serverSocket = serverSocket;
 	}
 	
@@ -41,6 +45,7 @@ public class Server {
 	
 	public static void mainServer() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(12312);
+		
 		Server server = new Server(serverSocket);
 		server.startServer();
 	}
