@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
+import chats.Client;
+import chats.Server;
 import main.Game;
 
 public class Paused extends State implements Statemethods {
@@ -22,8 +25,6 @@ public class Paused extends State implements Statemethods {
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.black);
-		g.drawString("MENU", Game.GAME_WIDTH/2, 200);
 
 	}
 
@@ -56,6 +57,18 @@ public class Paused extends State implements Statemethods {
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 			game.getPlaying().gamePaused = false;
 			GameState.state = GameState.PLAYING;
+		} else if(e.getKeyCode() == KeyEvent.VK_S) {
+			try {
+				Server.mainServer();
+			} catch(IOException e1) {
+				e1.printStackTrace();
+			}
+		} else if(e.getKeyCode() == KeyEvent.VK_C) {
+			try {
+				Client.mainClient();
+			} catch(IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 	}

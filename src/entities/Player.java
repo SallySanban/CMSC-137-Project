@@ -228,7 +228,7 @@ public class Player extends Character {
 				if (zombies[i] != null) {
 					if (zombies[i].hitbox.intersects(this.hitbox)) {
 						this.gamePanel.getGame().hitEnemy(i);
-						System.out.println("Killed enemy " + i + " which has intersected.");
+						//System.out.println("Killed enemy " + i + " which has intersected.");
 					}
 				}
 			}

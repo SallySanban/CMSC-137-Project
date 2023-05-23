@@ -114,11 +114,11 @@ public class Game implements Runnable {
 					);
 					enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
 				} else {
-					System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
+					//System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
 					break;
 				}
 			}
-			System.out.println("There are now " + currentEnemyIndex + " enemies.");
+			//System.out.println("There are now " + currentEnemyIndex + " enemies.");
 		}
 		
 	}
@@ -192,7 +192,7 @@ public class Game implements Runnable {
 			
 			// if 3 seconds have passed already
 			if (currentTimeInSeconds > RESPAWN_TIME) {
-				System.out.println("3 seconds has passed.");
+				//System.out.println("3 seconds has passed.");
 				generateEnemy();
 				respawnCounter = System.nanoTime(); // reset respawn counter
 			}

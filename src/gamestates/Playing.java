@@ -4,8 +4,11 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import background.BackgroundManager;
+import chats.Client;
+import chats.Server;
 import entities.Player;
 import main.Game;
 import main.GamePanel;
@@ -123,7 +126,7 @@ public class Playing extends State implements Statemethods{
 		
 		else if(keyCode == KeyEvent.VK_ESCAPE) {
 			gamePaused = true;
-			GameState.state = GameState.PAUSED;
+			GameState.state = GameState.PAUSED;			
 			
 		}
 	}
