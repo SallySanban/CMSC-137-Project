@@ -12,6 +12,7 @@ import java.awt.image.RasterFormatException;
 import entities.Character;
 import entities.Player;
 import main.Game;
+import main.GamePanel;
 import utils.LoadSave;
 
 
@@ -38,6 +39,7 @@ public class Zombie extends Character {
 	protected float xDrawOffset = 9 * Game.SCALE;
 	protected float yDrawOffset = 2 * Game.SCALE;
 	protected Player player;
+	protected GamePanel gamePanel;
 	protected float xSpeed = 0;
 
 	//for jumping and gravity
@@ -121,9 +123,10 @@ public class Zombie extends Character {
 	
 	// update function
 	public void update() {
-		updateAnimationTick();
-		setAnimation();
-		followPlayer();
+			updateAnimationTick();
+			setAnimation();
+			followPlayer();
+		
 	}
 
 	

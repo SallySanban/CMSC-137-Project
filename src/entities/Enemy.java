@@ -11,6 +11,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import main.Game;
+import main.GamePanel;
 import utils.LoadSave;
 
 public class Enemy extends Character{

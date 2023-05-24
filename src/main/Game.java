@@ -4,6 +4,7 @@ package main;
 import java.awt.Graphics;
 import gamestates.GameState;
 import gamestates.Menu;
+import gamestates.Paused;
 import gamestates.Playing;
 import java.util.Random;
 import java.awt.Component;
@@ -28,6 +29,7 @@ public class Game implements Runnable {
 
 	private Playing playing;
 	private Menu menu;
+	private Paused paused;
 
 
 	// public final static int TILE_DEFAULT_SIZE = 32;
@@ -86,6 +88,7 @@ public class Game implements Runnable {
 	private void initialize() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		paused = new Paused(this);
 		bgManager = new BackgroundManager(this);
 		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 		player.loadBgData(bgManager.getCurrBg().getBgData());
@@ -99,37 +102,45 @@ public class Game implements Runnable {
 
 	// function that generates enemies according to the set RESPAWN_COUNT
 	private void generateEnemy() {
-		for (i=0; i<RESPAWN_COUNT; i++) {
-			if (currentEnemyIndex < MAX_ENEMY_COUNT) {
-				enemies[currentEnemyIndex] = new ZombieMan(
-						0.9f*rand.nextFloat()*GAME_WIDTH, 
-						(0.5f*rand.nextFloat())*GAME_HEIGHT, 
-						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
-						(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
-						this.player
-				);
-				enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
-			} else {
-				System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
-				break;
+		if(!playing.gamePaused) {
+			for (i=0; i<RESPAWN_COUNT; i++) {
+				if (currentEnemyIndex < MAX_ENEMY_COUNT) {
+					enemies[currentEnemyIndex] = new ZombieMan(
+							0.9f*rand.nextFloat()*GAME_WIDTH, 
+							(0.5f*rand.nextFloat())*GAME_HEIGHT, 
+							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
+							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
+							this.player
+					);
+					enemies[currentEnemyIndex++].loadBgData(bgManager.getCurrBg().getBgData());
+				} else {
+					//System.out.print("Too many enemies: Stopped enemy respawn until some enemies are removed. ");
+					break;
+				}
 			}
+			//System.out.println("There are now " + currentEnemyIndex + " enemies.");
 		}
-		System.out.println("There are now " + currentEnemyIndex + " enemies.");
+		
 	}
 
 	public void update() {
-		switch(GameState.state){
-		case MENU:
-			menu.update();
-			break;
-		case PLAYING:
-			playing.update();
-			for (i=0; i<currentEnemyIndex; i++) {
-				enemies[i].update();
+		if(!playing.gamePaused) {
+			switch(GameState.state){
+			case MENU:
+				menu.update();
+				break;
+			case PLAYING:
+				playing.update();
+				for (i=0; i<currentEnemyIndex; i++) {
+					enemies[i].update();
+				}
+				break;
+			case PAUSED:
+				paused.update();
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
 		
 		// player.update();
@@ -147,6 +158,9 @@ public class Game implements Runnable {
 			for (i=0; i<currentEnemyIndex; i++) {
 			enemies[i].render(g);
 			}
+			break;
+		case PAUSED:
+			paused.draw(g);
 			break;
 		default:
 			break;
@@ -178,7 +192,7 @@ public class Game implements Runnable {
 			
 			// if 3 seconds have passed already
 			if (currentTimeInSeconds > RESPAWN_TIME) {
-				System.out.println("3 seconds has passed.");
+				//System.out.println("3 seconds has passed.");
 				generateEnemy();
 				respawnCounter = System.nanoTime(); // reset respawn counter
 			}
@@ -211,6 +225,10 @@ public class Game implements Runnable {
 
 	public Playing getPlaying(){
 		return playing;
+	}
+	
+	public Paused getPaused() {
+		return paused;
 	}
 
 	public GamePanel getGamePanel(){
