@@ -13,6 +13,7 @@ import chats.Server;
 import main.Game;
 
 public class Paused extends State implements Statemethods {
+	private boolean serverPressed = false;
 
 	public Paused(Game game) {
 		super(game);
@@ -28,7 +29,9 @@ public class Paused extends State implements Statemethods {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.black);
-		g.drawString("THIS GAME IS PAUSED", Game.GAME_WIDTH/2, Game.GAME_HEIGHT/2);
+		g.drawString("THIS GAME IS PAUSED", (Game.GAME_WIDTH/2)-70, Game.GAME_HEIGHT/2);
+		g.drawString("Press S to start server", (Game.GAME_WIDTH/2)-65, (Game.GAME_HEIGHT/2)+20);
+		g.drawString("Press C to start chatting", (Game.GAME_WIDTH/2)-65, (Game.GAME_HEIGHT/2)+40);
 	}
 
 	@Override
@@ -61,17 +64,25 @@ public class Paused extends State implements Statemethods {
 			game.getPlaying().gamePaused = false;
 			GameState.state = GameState.PLAYING;
 		} else if(e.getKeyCode() == KeyEvent.VK_S) {
+			serverPressed = true;
 			try {
 				Server.mainServer();
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if(e.getKeyCode() == KeyEvent.VK_C) {
-			try {
-				Client.mainClient();
-			} catch(IOException e1) {
-				e1.printStackTrace();
+			if(serverPressed == true) {
+				JFrame frame = new JFrame();
+				
+				JOptionPane.showMessageDialog(frame,"Cannot be server and client at the same time.");  
+			} else {
+				try {
+					Client.mainClient();
+				} catch(IOException e1) {
+					e1.printStackTrace();
+				}
 			}
+			
 		}
 
 	}
