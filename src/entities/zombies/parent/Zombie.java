@@ -11,10 +11,11 @@ import java.awt.image.RasterFormatException;
 
 import entities.Character;
 import entities.Player;
+import gamestates.GameState;
 import main.Game;
 import main.GamePanel;
 import utils.LoadSave;
-
+import java.util.Random;
 
 // "Zombie Man" class
 public class Zombie extends Character {
@@ -41,7 +42,7 @@ public class Zombie extends Character {
 	protected Player player;
 	protected GamePanel gamePanel;
 	protected float xSpeed = 0;
-
+	protected float basisSpeed = playerSpeed*0.3f;
 	//for jumping and gravity
 	protected float airSpeed = 0f;
 	protected float gravity = 0.04f * Game.SCALE;
@@ -56,39 +57,52 @@ public class Zombie extends Character {
 		super(x, y, width, height);
 		initHitbox(x, y, 35*Game.SCALE, 50*Game.SCALE);
 		this.player = player;
+		xSpeed = ((new Random()).nextInt()/2 == 0) ? -basisSpeed : basisSpeed;
 	}
 	
 	
 	private void followPlayer() {
 		
-		
 		// PART 1: Update X positions
 		
-		// first index is textField location, and the second index is hitbox Position
-		float[] playerXPosition = player.XPositions();
 		
-		// if on left side of player
-//		if (this.hitbox.x > playerXPosition[1]) {
+		// DO NOT DELETE THIS FROM CODE (in case we'll implement it)
+		
+//		// first index is textField location, and the second index is hitbox Position
+//		float[] playerXPosition = player.XPositions();
+//		
+//		// if on left side of player
+//		if (this.hitbox.x > playerXPosition[0]) {
 //			xSpeed = 0-(playerSpeed*0.3f);
 //			
 //		// if on right side of player
-//		} else if (this.hitbox.x < playerXPosition[1]) {
+//		} else if (this.hitbox.x < playerXPosition[0]) {
 //			xSpeed = 0+(playerSpeed*0.3f);
 //			
 //		} else {
 //			xSpeed = 0;
 //		}
 		
+//		// if can move to next direction, move there
+//		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
+//			hitbox.x += (xSpeed);
+//			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y); 		
+//		
+//		// else, if cannot move, try jumping
+//		} else {
+//			xSpeed = -xSpeed;
+//		}
+
+		
 		// if can move to next direction, move there
 		if(CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, bgData)){
 			hitbox.x += (xSpeed);
 			textField.setLocation(textField.getLocation().x + (int) xSpeed, textField.getLocation().y); 		
 		
-		// else, if cannot move, try jumping
+		// else, if cannot move, move to different direction
 		} else {
-			jump();
+			xSpeed = -xSpeed;
 		}
-		
 		
 		
 		// PART 2: Update Y Positions
