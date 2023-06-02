@@ -129,6 +129,7 @@ public class Playing extends State implements Statemethods{
 		else if(keyCode == KeyEvent.VK_ESCAPE) {
 			gamePaused = true;
 			GameState.state = GameState.PAUSED;	
+			game.getPaused().enterChatMode();
 		}
 	}
 

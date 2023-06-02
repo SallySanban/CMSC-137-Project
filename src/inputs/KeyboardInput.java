@@ -29,7 +29,7 @@ public class KeyboardInput implements KeyListener{
 			gamePanel.getGame().getPlaying().keyPressed(e);
 			break;
 		case PAUSED:
-			gamePanel.getGame().getPaused().keyPressed(e);
+//			gamePanel.getGame().getPaused().keyPressed(e);
 			break;
 		default:
 			break;
