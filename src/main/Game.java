@@ -73,6 +73,7 @@ public class Game implements Runnable {
 	// variables for background manager
 	private BackgroundManager bgManager;
 	
+	
 	public Game() {
 		initialize();
 		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);

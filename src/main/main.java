@@ -6,11 +6,14 @@ import chats.Server;
 
 public class main {
 
+	
 	public static void main(String[] args) {
 		
 		new Game();
 
 		ServerSocket serverSocket;
+		
+		// connect the server for chat
 		try {
 			serverSocket = new ServerSocket(12312);
 			Server server = new Server(serverSocket);
@@ -19,6 +22,8 @@ public class main {
 		} catch (IOException e) {
 			System.out.println("A server is already running so there's no need to make another one.");
 		}
+
 	}
+	
 
 }

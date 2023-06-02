@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.OutputStream;
 
 import main.Game;
 
@@ -51,6 +52,11 @@ public class Menu extends State implements Statemethods {
 
 	}
 
+	OutputStream outputStream;
+	public void setServerOutputStream(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){

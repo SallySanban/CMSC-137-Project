@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.*;
 
@@ -15,6 +16,7 @@ import entities.Player;
 import main.Game;
 import main.GamePanel;
 import utils.LoadSave;
+import client.ServerSender;
 
 public class Playing extends State implements Statemethods{
 	private Player player;
@@ -106,27 +108,68 @@ public class Playing extends State implements Statemethods{
 
 	}
 
+
+	OutputStream outputStream;
+	public void setServerOutputStream(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+	
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 				
 		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			player.setJump(true);
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('w', outputStream);
+			} else {
+				System.out.println("Tried to jump send jump key to server");
+			}
+//			player.setJump(true);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
-			player.setLeft(true);
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('a', outputStream);
+			} else {
+				System.out.println("Tried to go left");
+			}
+//			player.setLeft(true);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
-			player.setDown(true);
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('w', outputStream);
+			} else {
+				System.out.println("Tried to go down");
+			}
+//			player.setDown(true);
 		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-			player.setRight(true);
+
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('w', outputStream);
+			} else {
+				System.out.println("Tried to go right");
+			}
+//			player.setRight(true);
 			
 			
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
-			player.setAttack(true, game.getGamePanel());
+
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('t', outputStream);
+			} else {
+				System.out.println("Tried to attack");
+			}
+//			player.setAttack(true, game.getGamePanel());
 		}
 		
 		else if(keyCode == KeyEvent.VK_ESCAPE) {
+
+			if (this.outputStream != null) {
+				ServerSender.sendCharToServer('e', outputStream);
+			} else {
+				System.out.println("Tried to press escape");
+			}
+			
 			gamePaused = true;
 			GameState.state = GameState.PAUSED;	
 			game.getPaused().enterChatMode();

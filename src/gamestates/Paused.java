@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.*;
 
@@ -65,6 +66,13 @@ public class Paused extends State implements Statemethods {
 			e1.printStackTrace();				
 		}
 	}
+	
+
+	OutputStream outputStream;
+	public void setServerOutputStream(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+	
 	
 	@Override
 	public void keyPressed(KeyEvent e) {

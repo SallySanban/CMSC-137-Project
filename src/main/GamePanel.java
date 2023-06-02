@@ -4,6 +4,8 @@ package main;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+
+import inputs.CharacterListener;
 import inputs.KeyboardInput;
 import inputs.MouseInput;
 import javax.swing.JLabel;
@@ -30,7 +32,8 @@ public class GamePanel extends JPanel {
 		this.menuText = menuText;
 		
 		setPanelSize();
-
+		
+		addKeyListener(new CharacterListener(this));
 		addKeyListener(new KeyboardInput(this));
 		addMouseListener(mouseInput);
 		addMouseMotionListener(mouseInput);
