@@ -48,8 +48,8 @@ public class Game implements Runnable {
 	public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE *TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-	public final static int MAX_ENEMY_COUNT = 100;
-	
+	public final static int MAX_ENEMY_COUNT = 10;
+
 	// variables for enemies
 	public Zombie[] enemies = new Zombie[900];
 	private Random rand = new Random();
