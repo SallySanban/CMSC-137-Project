@@ -48,7 +48,7 @@ public class Game implements Runnable {
 	public final static int TILES_SIZE = (int) (TILE_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE *TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-	public final static int MAX_ENEMY_COUNT = 100;
+	public final static int MAX_ENEMY_COUNT = 10;
 	
 	// variables for enemies
 	public Zombie[] enemies = new Zombie[900];
@@ -67,7 +67,7 @@ public class Game implements Runnable {
 		}
 		enemies[currentEnemyIndex--] = null;
 		player.addPower();
-		gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
+		gamePanel.menuText.setText("(Server) Health: " + player.HPvalue + ", Power: " + player.powerValue);
 	}
 	
 	// variables for background manager
@@ -76,7 +76,7 @@ public class Game implements Runnable {
 	
 	public Game() {
 		initialize();
-		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
+		menuText = new JLabel("(Server) Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
 		menuText.setFont(fontStyle);
 		menuText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		gamePanel = new GamePanel(this, menuText);
