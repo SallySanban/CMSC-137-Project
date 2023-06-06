@@ -58,6 +58,7 @@ public class KeyboardInput implements KeyListener{
 			gamePanel.getGame().getPlaying().keyPressed(e);
 			break;
 		case PAUSED:
+			gamePanel.getGame().setOutputStream(outputStream);
 			gamePanel.getGame().getPaused().setServerOutputStream(outputStream);
 			gamePanel.getGame().getPaused().keyPressed(e);
 			break;

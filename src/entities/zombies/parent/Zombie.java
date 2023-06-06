@@ -8,12 +8,14 @@ import static utils.HelpMethods.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
+import java.io.DataOutputStream;
 
 import entities.Character;
 import entities.Player;
 import gamestates.GameState;
 import main.Game;
 import main.GamePanel;
+import server.ClientSender;
 import utils.LoadSave;
 import java.util.Random;
 
@@ -135,11 +137,19 @@ public class Zombie extends Character {
 		} 
 	}
 	
+	public float[] getPosition() {
+		return new float[] {hitbox.x, hitbox.y};
+	}
+	
 	// update function
-	public void update() {
+	public void update(DataOutputStream outputStream, int enemyNumber) {
 			updateAnimationTick();
 			setAnimation();
 			followPlayer();
+			
+			// send position to clients
+			System.out.println("Tried sending this string: " + "enemy " + enemyNumber + ": (" + hitbox.x + ", " + hitbox.y + ")");
+			ClientSender.sendStringToClient("enemy " + enemyNumber + ": (" + hitbox.x + ", " + hitbox.y + ")", outputStream);
 		
 	}
 

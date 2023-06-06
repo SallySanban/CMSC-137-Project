@@ -12,6 +12,7 @@ import entities.Enemy;
 import main.Game;
 import utils.LoadSave;
 import main.GamePanel;
+import server.ClientSender;
 import entities.zombies.parent.*;
 
 public class Player extends Character {
@@ -56,6 +57,7 @@ public class Player extends Character {
 		setAnimation();
 		updatePosition();
 //		updateHitbox();
+
 	}
 
 	public void render(Graphics g) {

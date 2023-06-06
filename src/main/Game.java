@@ -2,10 +2,14 @@ package main;
 
 // java imports
 import java.awt.Graphics;
+import java.io.DataOutputStream;
+
 import gamestates.GameState;
 import gamestates.Menu;
 import gamestates.Paused;
 import gamestates.Playing;
+import server.ClientSender;
+
 import java.util.Random;
 import java.awt.Component;
 import java.awt.Font;
@@ -72,7 +76,11 @@ public class Game implements Runnable {
 	
 	// variables for background manager
 	private BackgroundManager bgManager;
+	private DataOutputStream outputStream;
 	
+	public void setOutputStream(DataOutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
 	
 	public Game() {
 		initialize();
@@ -132,21 +140,27 @@ public class Game implements Runnable {
 				break;
 			case PLAYING:
 				playing.update();
+				
+				// send player positions 
+				System.out.println("Tried sending this string: " + "player " + 1 + ": (" + player.getHitbox().x + ", " + player.getHitbox().y + ")");
+				ClientSender.sendStringToClient("player " + 1 + ": (" + player.getHitbox().x + ", " + player.getHitbox().y + ")", outputStream);
+				
+				// send enemy positions too after update
 				for (i=0; i<currentEnemyIndex; i++) {
-					enemies[i].update();
-				}
+					if (enemies[i] != null) {
+						enemies[i].update(outputStream, i);
+					}
+				}				
 				break;
+				
 			case PAUSED:
 				paused.update();
 				break;
+				
 			default:
 				break;
 			}
-		}
-		
-		// player.update();
-		// bgManager.update();
-		
+		}		
 	}
 	
 	public void render(Graphics g) {

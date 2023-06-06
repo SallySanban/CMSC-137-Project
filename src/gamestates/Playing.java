@@ -16,7 +16,7 @@ import entities.Player;
 import main.Game;
 import main.GamePanel;
 import utils.LoadSave;
-import client.ServerSender;
+import server.ClientSender;
 
 public class Playing extends State implements Statemethods{
 	private Player player;
@@ -122,21 +122,21 @@ public class Playing extends State implements Statemethods{
 		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('w', outputStream);
+				ClientSender.sendCharToClient('w', outputStream);
 			} else {
 				System.out.println("Tried to jump send jump key to server");
 			}
 //			player.setJump(true);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('a', outputStream);
+				ClientSender.sendCharToClient('a', outputStream);
 			} else {
 				System.out.println("Tried to go left");
 			}
 //			player.setLeft(true);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('w', outputStream);
+				ClientSender.sendCharToClient('w', outputStream);
 			} else {
 				System.out.println("Tried to go down");
 			}
@@ -144,7 +144,7 @@ public class Playing extends State implements Statemethods{
 		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
 
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('w', outputStream);
+				ClientSender.sendCharToClient('w', outputStream);
 			} else {
 				System.out.println("Tried to go right");
 			}
@@ -155,7 +155,7 @@ public class Playing extends State implements Statemethods{
 		} else if (keyCode == KeyEvent.VK_SPACE) {
 
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('t', outputStream);
+				ClientSender.sendCharToClient('t', outputStream);
 			} else {
 				System.out.println("Tried to attack");
 			}
@@ -165,7 +165,7 @@ public class Playing extends State implements Statemethods{
 		else if(keyCode == KeyEvent.VK_ESCAPE) {
 
 			if (this.outputStream != null) {
-				ServerSender.sendCharToServer('e', outputStream);
+				ClientSender.sendCharToClient('e', outputStream);
 			} else {
 				System.out.println("Tried to press escape");
 			}
@@ -183,18 +183,18 @@ public class Playing extends State implements Statemethods{
 		
 		// updated code by Yves: Make arrow keys also functional (omit switch case usage)
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
-			player.setJump(false);
+//			player.setJump(false);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
-			player.setLeft(false);
+//			player.setLeft(false);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
-			player.setDown(false);
+//			player.setDown(false);
 		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-			player.setRight(false);
+//			player.setRight(false);
 			
 			
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
-			player.setAttack(false, game.getGamePanel());
+//			player.setAttack(false, game.getGamePanel());
 		} 	
 	}
 
