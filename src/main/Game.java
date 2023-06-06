@@ -67,7 +67,7 @@ public class Game implements Runnable {
 		}
 		enemies[currentEnemyIndex--] = null;
 		player.addPower();
-		gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
+		gamePanel.menuText.setText("(Client) Health: " + player.HPvalue + ", Power: " + player.powerValue);
 	}
 	
 	// variables for background manager
@@ -76,7 +76,7 @@ public class Game implements Runnable {
 	
 	public Game() {
 		initialize();
-		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
+		menuText = new JLabel("(Client) Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
 		menuText.setFont(fontStyle);
 		menuText.setAlignmentX(Component.CENTER_ALIGNMENT);
 		gamePanel = new GamePanel(this, menuText);
