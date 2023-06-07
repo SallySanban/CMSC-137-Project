@@ -145,12 +145,12 @@ public class Game implements Runnable {
 				System.out.println("Tried sending this string: " + "player " + 1 + ": (" + player.getHitbox().x + ", " + player.getHitbox().y + ")");
 				ClientSender.sendStringToClient("player " + 1 + ": (" + player.getHitbox().x + ", " + player.getHitbox().y + ")", outputStream);
 				
-				// send enemy positions too after update
+				// send enemy positions too after updating its positions
 				for (i=0; i<currentEnemyIndex; i++) {
 					if (enemies[i] != null) {
 						enemies[i].update(outputStream, i);
 					}
-				}				
+				}
 				break;
 				
 			case PAUSED:
