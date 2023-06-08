@@ -7,13 +7,13 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.media.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.web.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx-swt.jar"/>
-	<classpathentry kind="lib" path="D:/Files/UPLB Stuff/Third Year/CMSC 137/CMSC 137 Project/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx-swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/acer/Downloads/openjfx-20.0.1_windows-x64_bin-sdk/javafx-sdk-20.0.1/lib/javafx.base.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

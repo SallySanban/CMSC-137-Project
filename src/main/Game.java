@@ -85,10 +85,9 @@ public class Game implements Runnable {
 	//hit Opponent
 	public void hitOpponent() {
 		if(playing.getPlayerPower() > playing.getOpponentPower()){
-			playing.gamePaused=true;
 			System.out.println("----------------------" + opponent.HPvalue);
 			playing.state = 1;
-			GameState.state = GameState.PAUSED;
+			GameState.state = GameState.WIN;
 		}
 	}
 
@@ -114,6 +113,8 @@ public class Game implements Runnable {
 		playing = new Playing(this);
 		playing.connectToServer();
 		paused = new Paused(this);
+		win = new Win(this);
+		lose = new Lose(this);
 		bgManager = new BackgroundManager(this);
 		opponent = new Enemy(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);

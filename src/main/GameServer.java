@@ -21,6 +21,7 @@ public class GameServer {
 
 
 
+
 	//constructor for game server
 	public GameServer(){
 		numPlayers = 0;
@@ -111,7 +112,6 @@ public class GameServer {
 						p2y = dataIn.readFloat();
 						p2power = dataIn.readInt();
 						p2state = dataIn.readInt();
-
 //						System.out.println("Player 2 x : " + p2power);
 //						System.out.println("Player 2 y : " + p2y);
 					}

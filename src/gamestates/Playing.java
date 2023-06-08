@@ -203,9 +203,9 @@ public class Playing extends State implements Statemethods{
 						opponent.setPower(dataIn.readInt());
 						enemystate = dataIn.readInt();
 						if(enemystate == 1){
-							gamePaused = true;
-							GameState.state = GameState.PAUSED;
+							GameState.state = GameState.LOSE;
 						}
+
 					}
 				}
 			}catch(IOException ex){
