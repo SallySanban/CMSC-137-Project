@@ -32,8 +32,8 @@ public class CharacterListener implements KeyListener {
 			Socket socket = new Socket(serverAddress, port);
 			DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 			System.out.println("Connected to the server.");
-			socket.close();
-			print("Connection closed.");
+//			socket.close();
+//			print("Connection closed.");
 		} catch (IOException e) {
 			print("No server yet!!\n");        	
 		}
@@ -44,11 +44,11 @@ public class CharacterListener implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		print("I got this value on keyPressed: " + e.getKeyChar());
+//		print("I got this value on keyPressed: " + e.getKeyChar());
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		print("I got this value on keyReleased: " + e.getKeyChar());
+//		print("I got this value on keyReleased: " + e.getKeyChar());
 	}	
 }

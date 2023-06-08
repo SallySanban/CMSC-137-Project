@@ -9,19 +9,20 @@ public class main {
 	
 	public static void main(String[] args) {
 		
-		new Game();
-
+		int port = 8080;
 		ServerSocket serverSocket;
 		
 		// connect the server for chat
 		try {
-			serverSocket = new ServerSocket(12312);
+			serverSocket = new ServerSocket(port);
 			Server server = new Server(serverSocket);
 			server.startServer();
-			System.out.println("A server has just been created.");
+			System.out.println("A server for chat on port " + port + " has just been created.");
 		} catch (IOException e) {
 			System.out.println("A server is already running so there's no need to make another one.");
 		}
+		
+		new Game();
 
 	}
 	

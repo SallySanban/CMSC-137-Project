@@ -110,6 +110,7 @@ public class Playing extends State implements Statemethods{
 
 
 	OutputStream outputStream;
+	
 	public void setServerOutputStream(OutputStream outputStream) {
 		this.outputStream = outputStream;
 	}
@@ -123,30 +124,34 @@ public class Playing extends State implements Statemethods{
 		if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('w', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to jump send jump key to server");
+				System.out.println("Attempt has been made to send: up key signal.");
 			}
 //			player.setJump(true);
 		} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('a', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to go left");
+				System.out.println("Attempt has been made to send: left key signal.");
 			}
 //			player.setLeft(true);
 		} else if (keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_S) {
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('w', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to go down");
+				System.out.println("Attempt has been made to send: down key signal.");
 			}
 //			player.setDown(true);
 		} else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
 
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('w', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to go right");
+				System.out.println("Attempt has been made to send: right key signal.");
 			}
 //			player.setRight(true);
 			
@@ -156,8 +161,9 @@ public class Playing extends State implements Statemethods{
 
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('t', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to attack");
+				System.out.println("Attempt has been made to send: space signal.");
 			}
 //			player.setAttack(true, game.getGamePanel());
 		}
@@ -166,14 +172,16 @@ public class Playing extends State implements Statemethods{
 
 			if (this.outputStream != null) {
 				ServerSender.sendCharToServer('e', outputStream);
+				System.out.println("Client tried to send character to server!");
 			} else {
-				System.out.println("Tried to press escape");
+				System.out.println("Attempt has been made to send: esc key signal.");
 			}
 			
 			gamePaused = true;
 			GameState.state = GameState.PAUSED;	
 			game.getPaused().enterChatMode();
 		}
+		
 	}
 
 	@Override

@@ -33,10 +33,10 @@ public class KeyboardInput implements KeyListener{
 			socket = new Socket(serverAddress, port);
 			outputStream = new DataOutputStream(socket.getOutputStream());
 			System.out.println("Connected to the server.");
-			socket.close();
-			print("Connection closed.");
+//			socket.close();
+//			print("Connection closed.");
 		} catch (IOException e) {
-			print("No server yet!!\n");        	
+			print("No server established!!\n");        	
 		}
 	}
 
