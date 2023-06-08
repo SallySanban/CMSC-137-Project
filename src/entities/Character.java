@@ -45,6 +45,14 @@ public abstract class Character {
 		this.y = y;
 	}
 
+//	public float getX(){
+//		return this.x;
+//	}
+//
+//	public float getY(){
+//		return this.y;
+//	}
+
 	public Rectangle2D.Float getHitbox(){
 		return hitbox;
 	}

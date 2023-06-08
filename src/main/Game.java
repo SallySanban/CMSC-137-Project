@@ -5,9 +5,12 @@ import java.awt.Graphics;
 import java.net.*;
 import java.io.*;
 import gamestates.GameState;
+import gamestates.Lose;
 import gamestates.Menu;
 import gamestates.Paused;
 import gamestates.Playing;
+import gamestates.Win;
+
 import java.util.Random;
 import java.awt.Component;
 import java.awt.Font;
@@ -32,11 +35,13 @@ public class Game implements Runnable {
 	private Playing playing;
 	private Menu menu;
 	private Paused paused;
+	private Lose lose;
+	private Win win;
 
 
 	// public final static int TILE_DEFAULT_SIZE = 32;
 	private Player player;
-	private Player enemy;
+	public Enemy opponent;
 
 	// static declarations
 	private final static long RESPAWN_TIME = 3;
@@ -72,7 +77,19 @@ public class Game implements Runnable {
 		}
 		enemies[currentEnemyIndex--] = null;
 		player.addPower();
+		playing.updatePower(player.powerValue);
 		gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
+	}
+
+
+	//hit Opponent
+	public void hitOpponent() {
+		if(playing.getPlayerPower() > playing.getOpponentPower()){
+			playing.gamePaused=true;
+			System.out.println("----------------------" + opponent.HPvalue);
+			playing.state = 1;
+//			GameState.state = GameState.WIN;
+		}
 	}
 
 	// variables for background manager
@@ -98,15 +115,9 @@ public class Game implements Runnable {
 		playing.connectToServer();
 		paused = new Paused(this);
 		bgManager = new BackgroundManager(this);
+		opponent = new Enemy(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
 
-//		if(playerID == 1){
-			player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
-			enemy = new Player(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
-
-//		}else if(playerID == 2){
-//			player = new Player(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
-//			enemy = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
-//		}
 		player.loadBgData(bgManager.getCurrBg().getBgData());
 	}
 
@@ -155,13 +166,17 @@ public class Game implements Runnable {
 			case PAUSED:
 				paused.update();
 				break;
+			case LOSE:
+				lose.update();
+				break;
+			case WIN:
+				win.update();
+				break;
 			default:
 				break;
 			}
 		}
 
-		// player.update();
-		// bgManager.update();
 
 	}
 
@@ -178,6 +193,12 @@ public class Game implements Runnable {
 			break;
 		case PAUSED:
 			paused.draw(g);
+			break;
+		case LOSE:
+			lose.draw(g);
+			break;
+		case WIN:
+			win.draw(g);
 			break;
 		default:
 			break;

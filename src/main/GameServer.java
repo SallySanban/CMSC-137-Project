@@ -17,6 +17,7 @@ public class GameServer {
 	private WriteToClient p1WriteRunnable;
 	private WriteToClient p2WriteRunnable;
 	private float p1x, p1y, p2x, p2y;
+	private int p1power, p2power, p1state, p2state;
 
 
 
@@ -101,9 +102,18 @@ public class GameServer {
 					if(playerID == 1){
 						p1x = dataIn.readFloat();
 						p1y = dataIn.readFloat();
+						p1power = dataIn.readInt();
+						p1state = dataIn.readInt();
+//						System.out.println("Player 1 x : " + p1power);
+//						System.out.println("Player 1 y : " + p1y);
 					}else{
 						p2x = dataIn.readFloat();
 						p2y = dataIn.readFloat();
+						p2power = dataIn.readInt();
+						p2state = dataIn.readInt();
+
+//						System.out.println("Player 2 x : " + p2power);
+//						System.out.println("Player 2 y : " + p2y);
 					}
 				}
 			}catch(IOException ex){
@@ -133,9 +143,14 @@ public class GameServer {
 					if(playerID == 1){
 						dataOut.writeFloat(p2x);
 						dataOut.writeFloat(p2y);
+						dataOut.writeInt(p2power);
+						dataOut.writeInt(p2state);
+						dataOut.flush();
 					}else{
 						dataOut.writeFloat(p1x);
 						dataOut.writeFloat(p1y);
+						dataOut.writeInt(p1power);
+						dataOut.writeInt(p1state);
 						dataOut.flush();
 					}
 					try{

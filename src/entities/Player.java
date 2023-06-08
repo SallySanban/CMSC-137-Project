@@ -51,7 +51,7 @@ public class Player extends Character {
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 
-
+	private Enemy opponent;
 
 
 	public Player(float x, float y, int width, int height) {
@@ -205,6 +205,14 @@ public class Player extends Character {
 
 	}
 
+	public float getPlayerX(){
+		return hitbox.x;
+	}
+
+	public float getPlayerY(){
+		return hitbox.y;
+	}
+
 	private void loadAnimations() {
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
@@ -234,6 +242,9 @@ public class Player extends Character {
 	private void attackEnemies() {
 		if (!isAttacking) {
 			isAttacking = true;
+			if(this.hitbox.intersects(opponent.hitbox)){
+				this.gamePanel.getGame().hitOpponent();
+			}else{
 			for (i=0; i<enemyCount; i++) {
 				if (zombies[i] != null) {
 					if (zombies[i].hitbox.intersects(this.hitbox)) {
@@ -242,15 +253,17 @@ public class Player extends Character {
 					}
 				}
 			}
+			}
 			isAttacking = false;
 		}
 	}
 
-	public void setAttack(boolean attacking, GamePanel gamePanel) {
+	public void setAttack(boolean attacking, GamePanel gamePanel, Enemy opponent) {
 		this.gamePanel = gamePanel;
 		this.attacking = attacking;
 		this.zombies = this.gamePanel.getGame().enemies;
 		this.enemyCount = gamePanel.getGame().currentEnemyIndex;
+		this.opponent = opponent;
 
 		attackEnemies();
 	}

@@ -24,8 +24,8 @@ import main.GamePanel;
 import utils.LoadSave;
 
 public class Playing extends State implements Statemethods{
-	private Player player;
-	private Enemy opponent;
+	protected Player player;
+	protected Enemy opponent;
 	private BackgroundManager bgManager;
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
@@ -35,6 +35,8 @@ public class Playing extends State implements Statemethods{
 	private int maxlvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 	private BufferedImage backgroundImg;
 	public boolean gamePaused = false;
+	public int state = 0;
+	public int enemystate = 0;
 
 	private Socket socket;
 	private ReadFromServer rfsRunnable;
@@ -44,15 +46,14 @@ public class Playing extends State implements Statemethods{
 
 	public Playing(Game game) {
 		super(game);
-		initialize();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.GAME_BG_IMAGE);
 
 
 	}
-	private void initialize() {
+	private void initialize(float playerx, float playery, float enemyx, float enemyy) {
 		bgManager = new BackgroundManager(game);
-		player = new Player(200, 150, 65, 70);
-		opponent = new Enemy(500, 150, 65, 70);
+		opponent = new Enemy(enemyx, enemyy, 65, 70);
+		player = new Player(playerx, playery, 65, 70);
 		player.loadBgData(bgManager.getCurrBg().getBgData());
 
 	}
@@ -63,7 +64,7 @@ public class Playing extends State implements Statemethods{
 		if(!gamePaused) {
 			bgManager.update();
 			player.update();
-			//checkCloseToBorder();
+//			checkCloseToBorder();
 		}
 
 
@@ -101,7 +102,7 @@ public class Playing extends State implements Statemethods{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
-			player.setAttack(true, game.getGamePanel());
+			player.setAttack(true, game.getGamePanel(), opponent);
 		}
 
 	}
@@ -141,7 +142,7 @@ public class Playing extends State implements Statemethods{
 
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
-			player.setAttack(true, game.getGamePanel());
+			player.setAttack(true, game.getGamePanel(), opponent);
 		}
 
 		else if(keyCode == KeyEvent.VK_ESCAPE) {
@@ -168,7 +169,7 @@ public class Playing extends State implements Statemethods{
 
 		// Yves also added space for easier debugging attack functionality
 		} else if (keyCode == KeyEvent.VK_SPACE) {
-			player.setAttack(false, game.getGamePanel());
+			player.setAttack(false, game.getGamePanel(), opponent);
 		}
 	}
 
@@ -196,8 +197,14 @@ public class Playing extends State implements Statemethods{
 			try{
 				while(true){
 					if(opponent != null){
-						opponent.setX(dataIn.readFloat());
-						opponent.setY(dataIn.readFloat());
+						opponent.setEnemyX(dataIn.readFloat());
+						opponent.setEnemyY(dataIn.readFloat());
+						opponent.setPower(dataIn.readInt());
+						enemystate = dataIn.readInt();
+						if(enemystate == 1){
+							gamePaused = true;
+							GameState.state = GameState.PAUSED;
+						}
 					}
 				}
 			}catch(IOException ex){
@@ -221,6 +228,18 @@ public class Playing extends State implements Statemethods{
 		}
 	}
 
+	public void updatePower(int power){
+		player.powerValue = power;
+	}
+
+	public int getPlayerPower(){
+		return player.powerValue;
+	}
+
+	public int getOpponentPower(){
+		return opponent.powerValue;
+	}
+
 	//runnable class to write to server
 	private class WriteToServer implements Runnable{
 		private DataOutputStream dataOut;
@@ -233,8 +252,10 @@ public class Playing extends State implements Statemethods{
 			try{
 				while(true){
 					if(player != null){
-						dataOut.writeFloat(player.getHitbox().x);
-						dataOut.writeFloat(player.getHitbox().y);
+						dataOut.writeFloat(player.getPlayerX());
+						dataOut.writeFloat(player.getPlayerY());
+						dataOut.writeInt(player.powerValue);
+						dataOut.writeInt(state);
 						dataOut.flush();
 					}
 					try{
@@ -260,15 +281,20 @@ public class Playing extends State implements Statemethods{
 				System.out.println("Player Id: " + playerID);
 				if(playerID == 1){
 					System.out.println("Waiting for other player");
-
+					initialize(200, 150, 500, 150);
+				}else{
+					initialize(500, 150, 200, 150);
 				}
 				rfsRunnable = new ReadFromServer(in);
 				wtsRunnable = new WriteToServer(out);
 
 				//wait for start message for both players' GUI to start
 				rfsRunnable.waitForStartMessage();
+
 			}catch(IOException ex){
 				System.out.println("IOException from connect to server");
 			}
 		}
+
+
 }

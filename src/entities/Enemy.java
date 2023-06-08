@@ -29,6 +29,7 @@ public class Enemy extends Character{
 	private int[][] bgData;
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
+	public int powerValue;
 
 
 	//for jumping and gravity
@@ -49,6 +50,10 @@ public class Enemy extends Character{
 		setAnimation();
 		updatePosition();
 //		updateHitbox();
+	}
+
+	public void setPower(int power){
+		this.powerValue = power;
 	}
 
 	public void render(Graphics g) {
@@ -175,6 +180,21 @@ public class Enemy extends Character{
 
 	}
 
+	public float getEnemyX(){
+		return hitbox.x;
+	}
+
+	public float getEnemyY(){
+		return hitbox.y;
+	}
+
+	public void setEnemyX(float x){
+		hitbox.x = x;
+	}
+
+	public void setEnemyY(float y){
+		hitbox.y = y;
+	}
 
 
 	private void loadAnimations() {
