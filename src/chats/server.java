@@ -11,11 +11,11 @@ import java.awt.Color;
 
 public class Server {
 	private ServerSocket serverSocket;
-	
-	public Server(ServerSocket serverSocket) {			
+
+	public Server(ServerSocket serverSocket) {
 		this.serverSocket = serverSocket;
 	}
-	
+
 	public void startServer() throws IOException {
 		new Thread(new Runnable() {
             public void run() {
@@ -24,7 +24,7 @@ public class Server {
 	    				Socket socket = serverSocket.accept();
 	    				System.out.println("A new client has connected!");
 	    				ClientHandler clientHandler = new ClientHandler(socket);
-	    				
+
 	    				Thread thread = new Thread(clientHandler);
 	    				thread.start();
 	    			}
@@ -32,7 +32,7 @@ public class Server {
 	    			e.printStackTrace();
 	    		}}}).start();
 	}
-	
+
 	public void closeServerSocket() {
 		try {
 			if(serverSocket != null) {
@@ -42,10 +42,10 @@ public class Server {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void mainServer() throws IOException {
-		ServerSocket serverSocket = new ServerSocket(12312);
-		
+		ServerSocket serverSocket = new ServerSocket(45371);
+
 		Server server = new Server(serverSocket);
 		server.startServer();
 	}

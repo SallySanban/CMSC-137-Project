@@ -115,6 +115,10 @@ public class GameServer {
 //						System.out.println("Player 2 x : " + p2power);
 //						System.out.println("Player 2 y : " + p2y);
 					}
+					//close the socket if one of them already won
+					if(p1state == 1 || p2state == 2){
+						ss.close();
+					}
 				}
 			}catch(IOException ex){
 				System.out.println("IOException from read from client run");

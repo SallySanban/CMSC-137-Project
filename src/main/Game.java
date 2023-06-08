@@ -88,7 +88,7 @@ public class Game implements Runnable {
 			playing.gamePaused=true;
 			System.out.println("----------------------" + opponent.HPvalue);
 			playing.state = 1;
-//			GameState.state = GameState.WIN;
+			GameState.state = GameState.PAUSED;
 		}
 	}
 
