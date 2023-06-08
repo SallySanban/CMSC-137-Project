@@ -15,20 +15,20 @@ public class GamePanel extends JPanel {
 
 	// static fields
 	public static int MENU_TEXT_RESERVE_SPACE = 10;
-	
+
 	// main variable imports
 	private MouseInput mouseInput;
 	private Game game;
 	public JLabel menuText;
-	
+
 	// constructor call
 	public GamePanel(Game game, JLabel menuText) {
 		mouseInput = new MouseInput(this);
 		this.game = game;
-		
+
 		// this will be added to the panel later
 		this.menuText = menuText;
-		
+
 		setPanelSize();
 
 		addKeyListener(new KeyboardInput(this));

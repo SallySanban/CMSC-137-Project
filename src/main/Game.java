@@ -2,6 +2,8 @@ package main;
 
 // java imports
 import java.awt.Graphics;
+import java.net.*;
+import java.io.*;
 import gamestates.GameState;
 import gamestates.Menu;
 import gamestates.Paused;
@@ -19,7 +21,7 @@ import entities.zombies.*;
 import entities.zombies.parent.*;
 
 public class Game implements Runnable {
-	
+
 	// variables for game scene
 	private GameWindow gameWindow;
 	private GamePanel gamePanel;
@@ -34,10 +36,11 @@ public class Game implements Runnable {
 
 	// public final static int TILE_DEFAULT_SIZE = 32;
 	private Player player;
-	
-	// static declarations 
+	private Player enemy;
+
+	// static declarations
 	private final static long RESPAWN_TIME = 3;
-	private final int RESPAWN_COUNT = 3;		
+	private final int RESPAWN_COUNT = 3;
 	private final static int TILE_DEFAULT_SIZE = 32;
 	private final static float ENEMY_ENTITY_GRAPHICS_MULTIPLIER = 1.3f;
 	public final static int NORMAL_ENTITY_WIDTH = 65;
@@ -49,7 +52,7 @@ public class Game implements Runnable {
 	public final static int GAME_WIDTH = TILES_SIZE *TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 	public final static int MAX_ENEMY_COUNT = 100;
-	
+
 	// variables for enemies
 	public Zombie[] enemies = new Zombie[900];
 	private Random rand = new Random();
@@ -58,9 +61,11 @@ public class Game implements Runnable {
 	public int currentEnemyIndex = 0;
 	public JLabel menuText;
 
+
+
 	// function that is called when an enemy has been hit
 	public void hitEnemy(int index) {
-		
+
 		// kill enemy for now
 		for (i=index; i<currentEnemyIndex-1; i++) {
 			enemies[i] = enemies[i+1];
@@ -69,10 +74,10 @@ public class Game implements Runnable {
 		player.addPower();
 		gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
 	}
-	
+
 	// variables for background manager
 	private BackgroundManager bgManager;
-	
+
 	public Game() {
 		initialize();
 		menuText = new JLabel("Health: " + player.HPvalue + ", Power: " + player.powerValue, SwingConstants.CENTER);
@@ -82,23 +87,35 @@ public class Game implements Runnable {
 		gameWindow = new GameWindow(gamePanel, player);
 		gamePanel.requestFocus();
 
+
 		startGameLoop();
 	}
+
 
 	private void initialize() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		playing.connectToServer();
 		paused = new Paused(this);
 		bgManager = new BackgroundManager(this);
-		player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+
+//		if(playerID == 1){
+			player = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+			enemy = new Player(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+
+//		}else if(playerID == 2){
+//			player = new Player(500, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+//			enemy = new Player(200, 150, NORMAL_ENTITY_WIDTH, NORMAL_ENTITY_HEIGHT);
+//		}
 		player.loadBgData(bgManager.getCurrBg().getBgData());
 	}
+
 
 	private void startGameLoop() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
-	
+
 
 	// function that generates enemies according to the set RESPAWN_COUNT
 	private void generateEnemy() {
@@ -106,9 +123,9 @@ public class Game implements Runnable {
 			for (i=0; i<RESPAWN_COUNT; i++) {
 				if (currentEnemyIndex < MAX_ENEMY_COUNT) {
 					enemies[currentEnemyIndex] = new ZombieMan(
-							0.9f*rand.nextFloat()*GAME_WIDTH, 
-							(0.5f*rand.nextFloat())*GAME_HEIGHT, 
-							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER), 
+							0.9f*rand.nextFloat()*GAME_WIDTH,
+							(0.5f*rand.nextFloat())*GAME_HEIGHT,
+							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
 							(int) (NORMAL_ENTITY_WIDTH*ENEMY_ENTITY_GRAPHICS_MULTIPLIER),
 							this.player
 					);
@@ -120,7 +137,7 @@ public class Game implements Runnable {
 			}
 			//System.out.println("There are now " + currentEnemyIndex + " enemies.");
 		}
-		
+
 	}
 
 	public void update() {
@@ -142,12 +159,12 @@ public class Game implements Runnable {
 				break;
 			}
 		}
-		
+
 		// player.update();
 		// bgManager.update();
-		
+
 	}
-	
+
 	public void render(Graphics g) {
 		switch(GameState.state){
 		case MENU:
@@ -167,7 +184,7 @@ public class Game implements Runnable {
 		}
 		// bgManager.draw(g);
 		// player.render(g);
-		
+
 
 	}
 
@@ -175,21 +192,21 @@ public class Game implements Runnable {
 	public void run() {
 		double timePerFrame = 1000000000.0/FPS_SET;
 		double timePerUpdate = 1000000000.0/UPS_SET;
-		
+
 		long previousTime = System.nanoTime();
-		long respawnCounter = previousTime;			// time counter for enemy respawn 
+		long respawnCounter = previousTime;			// time counter for enemy respawn
 		long currentTimeInSeconds, currentTime;		// separate currentTime for performance improvement
 
 		double deltaU = 0;
 		double deltaF = 0;
 
 		while(true) {
-			
+
 			currentTime = System.nanoTime();
-			
+
 			// computes time that passed ever since start
 			currentTimeInSeconds = (currentTime-respawnCounter) / 1000000000;
-			
+
 			// if 3 seconds have passed already
 			if (currentTimeInSeconds > RESPAWN_TIME) {
 				//System.out.println("3 seconds has passed.");
@@ -226,7 +243,7 @@ public class Game implements Runnable {
 	public Playing getPlaying(){
 		return playing;
 	}
-	
+
 	public Paused getPaused() {
 		return paused;
 	}
@@ -234,4 +251,6 @@ public class Game implements Runnable {
 	public GamePanel getGamePanel(){
 		return this.gamePanel;
 	}
+
+
 }

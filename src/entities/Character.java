@@ -11,8 +11,8 @@ public abstract class Character {
 	protected int width, height;
 	protected Rectangle2D.Float hitbox;
 	public int HPvalue = 5;
-	protected JTextField textField = new JTextField("asdfasdfasdfasd");	    
-	
+	protected JTextField textField = new JTextField("asdfasdfasdfasd");
+
 	public Character(float x, float y, int width, int height) {
 		this.x = x;
 		this.y = y;
@@ -36,6 +36,14 @@ public abstract class Character {
 //		hitbox.x = (int) x;
 //		hitbox.y = (int) y;
 //	}
+
+	public void setX(float x){
+		this.x = x;
+	}
+
+	public void setY(float y){
+		this.y = y;
+	}
 
 	public Rectangle2D.Float getHitbox(){
 		return hitbox;

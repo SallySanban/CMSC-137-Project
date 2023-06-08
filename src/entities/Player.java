@@ -1,12 +1,18 @@
 package entities;
 
 import static utils.Constants.PlayerConstants.*;
+import java.net.*;
+import java.io.*;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
 import static utils.HelpMethods.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
+
 import javax.imageio.ImageIO;
 import entities.Enemy;
 import main.Game;
@@ -18,7 +24,7 @@ public class Player extends Character {
 
 	static final int NORMAL_ANIMATION_SPEED = 50;
 	static final int ATTACKING_ANIMATION_SPEED = 12;
-	
+
 	public int powerValue = 1;
 	private BufferedImage[][] animations;
 	private int i, enemyCount;
@@ -35,7 +41,7 @@ public class Player extends Character {
 	private float xDrawOffset = 9 * Game.SCALE;
 	private float yDrawOffset = 2 * Game.SCALE;
 	private boolean isAttacking = false;
-	private GamePanel gamePanel;	
+	private GamePanel gamePanel;
 	private Zombie[] zombies;
 
 	//for jumping and gravity
@@ -45,11 +51,15 @@ public class Player extends Character {
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 
+
+
+
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
 		initHitbox(x, y, 35*Game.SCALE, 50*Game.SCALE);
 	}
+
 
 	public void update() {
 		updateAnimationTick();
@@ -84,7 +94,7 @@ public class Player extends Character {
 			}
 		}
 	}
-	
+
 	private void setAnimation() {
 		int startAnimation = playerAction;
 
@@ -105,12 +115,12 @@ public class Player extends Character {
 		// (Yves) Implementation improvement below: "slow idle, fast attack" animation speed
 		// Make animation normal for now
 		animationSpeed = NORMAL_ANIMATION_SPEED;
-		if(moving) {			
+		if(moving) {
 			playerAction = RUNNING;
 		} else {
 			playerAction = IDLE;
 		}
-		
+
 		// speed up animation iff attacking
 		if(attacking) {
 			animationSpeed = ATTACKING_ANIMATION_SPEED;
@@ -241,20 +251,20 @@ public class Player extends Character {
 		this.attacking = attacking;
 		this.zombies = this.gamePanel.getGame().enemies;
 		this.enemyCount = gamePanel.getGame().currentEnemyIndex;
-		
+
 		attackEnemies();
 	}
-	
+
 	// first index is textField location, and the second index is hitbox Position
 	public float[] XPositions() {
 		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
 		return returnValue;
 	}
-	
+
 	public void addPower() {
 		this.powerValue++;
 	}
-	
+
 	public boolean isLeft() {
 		return left;
 	}

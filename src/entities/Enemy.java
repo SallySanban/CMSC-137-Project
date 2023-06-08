@@ -4,6 +4,7 @@ import static utils.Constants.PlayerConstants.*;
 import static utils.Constants.PlayerConstants.getSpriteAmount;
 import static utils.HelpMethods.*;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,8 +52,14 @@ public class Enemy extends Character{
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
-//		drawHitbox(g);
+		if(left) {
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75 - lvlOffset, (int) (hitbox.y - yDrawOffset), -width, height, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) + 75, (int) (hitbox.y - yDrawOffset), -width, height, null);
+		}
+		else {
+			//g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+			g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
+		}
 	}
 
 	private void updateAnimationTick() {
@@ -167,6 +174,8 @@ public class Enemy extends Character{
 		}
 
 	}
+
+
 
 	private void loadAnimations() {
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.ENEMY_ATLAS);
