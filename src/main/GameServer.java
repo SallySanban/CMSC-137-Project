@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import chats.ClientHandler;
+
 public class GameServer {
 	private int numPlayers;
 	private int maxPlayers;
-	private ServerSocket ss;
+	public ServerSocket ss;
 	private Socket player1Socket; //to store socket for player 1
 	private Socket player2Socket; //to store socket for player 2
 	private ReadFromClient p1ReadRunnable;
@@ -18,6 +20,7 @@ public class GameServer {
 	private WriteToClient p2WriteRunnable;
 	private float p1x, p1y, p2x, p2y;
 	private int p1power, p2power, p1state, p2state;
+	private boolean p1pause, p2pause;
 
 
 
@@ -31,7 +34,7 @@ public class GameServer {
 		p2y = 150;
 
 		try{
-			ss = new ServerSocket(45371);
+			ss = new ServerSocket(45373);
 			System.out.println("Successfully created server");
 		}catch(IOException ex){
 			System.out.println("IOException from server constructor");
@@ -75,12 +78,15 @@ public class GameServer {
 					writeThread1.start();
 					writeThread2.start();
 				}
+//				Thread thread = new Thread(clientHandler);
+//				thread.start();
 			}
 			System.out.println("No longer accepting connections");
 		}catch(IOException ex){
 			System.out.println("IOException in game server constructor");
 		}
 	}
+
 
 	//reading information from clients
 	private class ReadFromClient implements Runnable{
@@ -104,6 +110,7 @@ public class GameServer {
 						p1y = dataIn.readFloat();
 						p1power = dataIn.readInt();
 						p1state = dataIn.readInt();
+						p1pause = dataIn.readBoolean();
 //						System.out.println("Player 1 x : " + p1power);
 //						System.out.println("Player 1 y : " + p1y);
 					}else{
@@ -111,11 +118,11 @@ public class GameServer {
 						p2y = dataIn.readFloat();
 						p2power = dataIn.readInt();
 						p2state = dataIn.readInt();
-
+						p2pause = dataIn.readBoolean();
 //						System.out.println("Player 2 x : " + p2power);
 //						System.out.println("Player 2 y : " + p2y);
 					}
-					//close the socket if one of them already won
+					//close socket if one won
 					if(p1state == 1 || p2state == 2){
 						ss.close();
 					}
@@ -149,12 +156,14 @@ public class GameServer {
 						dataOut.writeFloat(p2y);
 						dataOut.writeInt(p2power);
 						dataOut.writeInt(p2state);
+						dataOut.writeBoolean(p2pause);
 						dataOut.flush();
 					}else{
 						dataOut.writeFloat(p1x);
 						dataOut.writeFloat(p1y);
 						dataOut.writeInt(p1power);
 						dataOut.writeInt(p1state);
+						dataOut.writeBoolean(p1pause);
 						dataOut.flush();
 					}
 					try{

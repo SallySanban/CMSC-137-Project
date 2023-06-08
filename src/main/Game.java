@@ -82,13 +82,14 @@ public class Game implements Runnable {
 	}
 
 
-	//hit Opponent
+	//hit Opponent (other player)
 	public void hitOpponent() {
 		if(playing.getPlayerPower() > playing.getOpponentPower()){
-			playing.gamePaused=true;
-			System.out.println("----------------------" + opponent.HPvalue);
+
+//			System.out.println("----------------------" + opponent.HPvalue);
+			//set the playing.state to 1 means that the player won
 			playing.state = 1;
-			GameState.state = GameState.PAUSED;
+			GameState.state = GameState.WIN; //set the gamestate to WIN
 		}
 	}
 
@@ -103,8 +104,6 @@ public class Game implements Runnable {
 		gamePanel = new GamePanel(this, menuText);
 		gameWindow = new GameWindow(gamePanel, player);
 		gamePanel.requestFocus();
-
-
 		startGameLoop();
 	}
 
@@ -112,6 +111,8 @@ public class Game implements Runnable {
 	private void initialize() {
 		menu = new Menu(this);
 		playing = new Playing(this);
+		lose = new Lose(this);
+		win = new Win(this);
 		playing.connectToServer();
 		paused = new Paused(this);
 		bgManager = new BackgroundManager(this);

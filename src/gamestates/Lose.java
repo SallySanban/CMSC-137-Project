@@ -14,6 +14,8 @@ import chats.Server;
 import main.Game;
 
 public class Lose extends State implements Statemethods {
+	private boolean serverPressed = false;
+
 	public Lose(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
@@ -29,8 +31,6 @@ public class Lose extends State implements Statemethods {
 	public void draw(Graphics g) {
 		g.setColor(Color.black);
 		g.drawString("YOU LOST", (Game.GAME_WIDTH/2)-70, Game.GAME_HEIGHT/2);
-//		g.drawString("Press S to start server", (Game.GAME_WIDTH/2)-65, (Game.GAME_HEIGHT/2)+20);
-//		g.drawString("Press C to start chatting", (Game.GAME_WIDTH/2)-65, (Game.GAME_HEIGHT/2)+40);
 	}
 
 	@Override
@@ -59,30 +59,6 @@ public class Lose extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-//			game.getPlaying().gamePaused = false;
-//			GameState.state = GameState.PLAYING;
-		} else if(e.getKeyCode() == KeyEvent.VK_S) {
-//			serverPressed = true;
-//			try {
-//				Server.mainServer();
-//			} catch(IOException e1) {
-//				e1.printStackTrace();
-//			}
-		} else if(e.getKeyCode() == KeyEvent.VK_C) {
-//			if(serverPressed == true) {
-//				JFrame frame = new JFrame();
-//
-//				JOptionPane.showMessageDialog(frame,"Cannot be server and client at the same time.");
-//			} else {
-//				try {
-//					Client.mainClient();
-//				} catch(IOException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-
-		}
 
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import chats.Client;
 import chats.Server;
+import main.GameServer;
 import main.Game;
 
 public class Paused extends State implements Statemethods {
@@ -63,18 +64,20 @@ public class Paused extends State implements Statemethods {
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 			game.getPlaying().gamePaused = false;
 			GameState.state = GameState.PLAYING;
-		} else if(e.getKeyCode() == KeyEvent.VK_S) {
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_S) {
 			serverPressed = true;
 			try {
 				Server.mainServer();
 			} catch(IOException e1) {
 				e1.printStackTrace();
 			}
-		} else if(e.getKeyCode() == KeyEvent.VK_C) {
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_C) {
 			if(serverPressed == true) {
 				JFrame frame = new JFrame();
-				
-				JOptionPane.showMessageDialog(frame,"Cannot be server and client at the same time.");  
+
+				JOptionPane.showMessageDialog(frame,"Cannot be server and client at the same time.");
 			} else {
 				try {
 					Client.mainClient();
@@ -82,7 +85,7 @@ public class Paused extends State implements Statemethods {
 					e1.printStackTrace();
 				}
 			}
-			
+
 		}
 
 	}

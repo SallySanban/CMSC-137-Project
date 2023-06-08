@@ -197,13 +197,29 @@ public class Playing extends State implements Statemethods{
 			try{
 				while(true){
 					if(opponent != null){
+						//read the coordinates of the opponent
 						opponent.setEnemyX(dataIn.readFloat());
 						opponent.setEnemyY(dataIn.readFloat());
+						//read the power value of the opponent
 						opponent.setPower(dataIn.readInt());
+						//read the state of the enemy (win - 1 or lose - 1)
 						enemystate = dataIn.readInt();
+						//if the enemy won, change gamestate to Lose
 						if(enemystate == 1){
+							GameState.state = GameState.LOSE;
+						}
+						//read if the opponent paused the game
+						boolean pauseState = dataIn.readBoolean();
+						//if the pause state is true, set gamestate to paused
+						if(pauseState == true){
 							gamePaused = true;
 							GameState.state = GameState.PAUSED;
+						}else{
+							//check if the enemy state or the state is not set to 1 before, setting the gamePaused back to false and the gamestate to playing
+							if(enemystate != 1 && state != 1){
+								gamePaused = false;
+								GameState.state = GameState.PLAYING;
+							}
 						}
 					}
 				}
@@ -252,10 +268,15 @@ public class Playing extends State implements Statemethods{
 			try{
 				while(true){
 					if(player != null){
+						//send coordinates of the player
 						dataOut.writeFloat(player.getPlayerX());
 						dataOut.writeFloat(player.getPlayerY());
+						//send the power of the player
 						dataOut.writeInt(player.powerValue);
+						//send the state of the player (win - 1 or lose - 0)
 						dataOut.writeInt(state);
+						//send if the game is paused or not
+						dataOut.writeBoolean(gamePaused);
 						dataOut.flush();
 					}
 					try{
@@ -274,7 +295,7 @@ public class Playing extends State implements Statemethods{
 	//function to connect to the server
 		public void connectToServer(){
 			try{
-				socket = new Socket("localhost", 45371);
+				socket = new Socket("localhost", 45373);
 				DataInputStream in = new DataInputStream(socket.getInputStream());
 				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 				playerID = in.readInt();

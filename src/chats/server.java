@@ -44,7 +44,7 @@ public class Server {
 	}
 
 	public static void mainServer() throws IOException {
-		ServerSocket serverSocket = new ServerSocket(45371);
+		ServerSocket serverSocket = new ServerSocket(45375);
 
 		Server server = new Server(serverSocket);
 		server.startServer();
