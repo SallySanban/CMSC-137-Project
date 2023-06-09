@@ -204,6 +204,8 @@ public class Playing extends State implements Statemethods{
 						enemystate = dataIn.readInt();
 						if(enemystate == 1){
 							GameState.state = GameState.LOSE;
+						}else if(enemystate == 2) {
+							GameState.state = GameState.WIN;
 						}
 
 					}
@@ -231,6 +233,14 @@ public class Playing extends State implements Statemethods{
 
 	public void updatePower(int power){
 		player.powerValue = power;
+	}
+	
+	public void decreaseHealth() {
+		player.HPvalue --;
+	}
+	
+	public int getPlayerHealth() {
+		return player.getHealth();
 	}
 
 	public int getPlayerPower(){
@@ -275,7 +285,7 @@ public class Playing extends State implements Statemethods{
 	//function to connect to the server
 		public void connectToServer(){
 			try{
-				socket = new Socket("localhost", 45371);
+				socket = new Socket("192.168.2.110", 1001);
 				DataInputStream in = new DataInputStream(socket.getInputStream());
 				DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 				playerID = in.readInt();

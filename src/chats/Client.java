@@ -140,7 +140,7 @@ public class Client extends JFrame implements ActionListener {
 		new Thread(new Runnable() {
             public void run() {
             	try {
-					Socket socket = new Socket("localhost", 12312);
+					Socket socket = new Socket("192.168.2.110", 1002);
 					Client client = new Client(socket, username);
 					client.listenForMessage();
 					client.sendMessage();

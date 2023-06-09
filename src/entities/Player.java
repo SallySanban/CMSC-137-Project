@@ -273,6 +273,14 @@ public class Player extends Character {
 		float[] returnValue = {this.textField.getLocation().x, this.hitbox.x};
 		return returnValue;
 	}
+	
+	public void decreaseHealth() {
+		this.HPvalue --;
+	}
+	
+	public int getHealth() {
+		return this.HPvalue;
+	}
 
 	public void addPower() {
 		this.powerValue++;

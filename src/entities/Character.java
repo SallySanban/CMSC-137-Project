@@ -10,7 +10,7 @@ public abstract class Character {
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle2D.Float hitbox;
-	public int HPvalue = 5;
+	public int HPvalue = 50;
 	protected JTextField textField = new JTextField("asdfasdfasdfasd");
 
 	public Character(float x, float y, int width, int height) {

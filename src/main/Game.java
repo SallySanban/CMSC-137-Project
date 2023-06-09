@@ -89,6 +89,16 @@ public class Game implements Runnable {
 			playing.state = 1;
 			GameState.state = GameState.WIN;
 		}
+		else {
+			player.decreaseHealth();
+			playing.decreaseHealth();
+			if(player.getHealth() == 0) {
+				playing.state = 2;
+				GameState.state = GameState.LOSE;
+			}
+			
+			gamePanel.menuText.setText("Health: " + player.HPvalue + ", Power: " + player.powerValue);
+		}
 	}
 
 	// variables for background manager

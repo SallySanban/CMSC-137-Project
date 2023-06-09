@@ -32,7 +32,7 @@ public class GameServer {
 		p2y = 150;
 
 		try{
-			ss = new ServerSocket(45371);
+			ss = new ServerSocket(1001);
 			System.out.println("Successfully created server");
 		}catch(IOException ex){
 			System.out.println("IOException from server constructor");

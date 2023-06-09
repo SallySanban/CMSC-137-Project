@@ -18,7 +18,7 @@ public class main {
 		
 		ServerSocket serverSocket;
 		try {
-			serverSocket = new ServerSocket(12312);
+			serverSocket = new ServerSocket(1002);
 			Server server = new Server(serverSocket);
 			server.startServer();
 			System.out.println("A server has just been created.");
